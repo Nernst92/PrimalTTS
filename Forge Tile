@@ -1,0 +1,467 @@
+IMAGE_URLS = {
+    ['forge_level_1_unlock'] = 'https://steamusercontent-a.akamaihd.net/ugc/2493385958838585915/4CB457A41119E0A69B810D87AE21FDA60668E3C3/',
+    ['forge_level_1_hide'] = 'https://steamusercontent-a.akamaihd.net/ugc/2493385958833246308/866729F6769638E05CE6C2F45695659E2990E34E/',
+    ['forge_level_2_unlock'] = 'https://steamusercontent-a.akamaihd.net/ugc/2493385958838586062/A69A6EB9877F6CE7CD5341459C5E03192D109FF9/',
+    ['forge_level_2_hide'] = 'https://steamusercontent-a.akamaihd.net/ugc/2493385958833246456/7F415B62B0FF112B50165F4111D47F67B0E9DDFC/',
+    ['forge_level_3_unlock'] = 'https://steamusercontent-a.akamaihd.net/ugc/2493385958838586143/52DA383899040E66A17150B0EABC3FE00563E146/',
+    ['forge_level_3_hide'] = 'https://steamusercontent-a.akamaihd.net/ugc/2493385958833246655/517BCB11475C7E4D808778DF38D9A930FFAF8CF1/',
+    ['forge_unlockall_unlock'] = 'https://steamusercontent-a.akamaihd.net/ugc/2493385958833247963/22B55D0E8BE53B537A98EBF698ABB2D5C8D22810/',
+    ['forge_unlockall_hide'] = 'https://steamusercontent-a.akamaihd.net/ugc/2493385958833246807/64DA29550D8474D4A50F74E633F3D5D459CEE1E3/',
+}
+
+POTION_TYPES = {
+    ['actor_potion_1'] = true,
+    ['actor_potion_2'] = true,
+    ['actor_potion_3'] = true,
+    ['actor_potion_4'] = true,
+    ['actor_potion_5'] = true,
+    ['actor_potion_6'] = true,
+}
+
+-- We're using tags here in case we add more later on, future expansions or homebrew, or want to restrict what's showing more precisely
+-- Could change forge_level to just an int
+is_unlocked = {
+    ['forge_level_1'] = false,
+    ['forge_level_2'] = false,
+    ['forge_level_3'] = false,
+    ['element_fire'] = false,
+    ['element_horn'] = false,
+    ['element_coral'] = false,
+    ['element_crystal'] = false,
+    ['element_thunder'] = false,
+    ['element_metal'] = false,
+    ['element_feather'] = false,
+    ['element_venom'] = false,
+    ['element_ice'] = false,
+}
+
+forge_bag = nil
+HIDE_FORGE_BAG = false
+action_in_progress = false
+ACTION_LOCK_DELAY = 0.2
+BYPASS_IMAGE_LOAD = 0.5
+
+before_all_toggle = nil
+
+function onLoad(script_state)
+    local saveData = JSON.decode(script_state)
+    saveData = nil
+
+    if saveData ~= nil then
+        if saveData.is_unlocked then
+            is_unlocked = saveData.is_unlocked
+        end
+
+        if is_unlocked['forge_level_1'] then
+            unlockLevel(1, not is_unlocked['forge_level_2'] and not is_unlocked['forge_level_3'])
+        end
+
+        if is_unlocked['forge_level_2'] then
+            unlockLevel(2, not is_unlocked['forge_level_3'])
+        end
+
+        if is_unlocked['forge_level_3'] then
+            unlockLevel(3)
+        end
+    end
+
+    -- Grab the first one if any
+    for _, object in ipairs(getObjectsWithTag('bag_forge')) do
+        forge_bag = object
+        break
+    end
+    if not forge_bag then
+        broadcastToAll('Missing forge bag.', Color.Red)
+    end
+
+    -- Remove the forge_bag noise
+    forge_bag.attachInvisibleHider('hide', HIDE_FORGE_BAG)
+    forge_bag.getComponent('AudioSource').set('mute', HIDE_FORGE_BAG)
+end
+
+function onSave()
+    local saveData = {}
+
+    saveData.is_unlocked = is_unlocked
+
+    return JSON.encode(saveData)
+end
+
+-- Wrapper to limit function use when hovering over this playermat 
+-- (prevent button use through cards and unintended clicks)
+function hoverWrapper(player, callback, ...)
+    if player ~= nil and (player.getHoverObject() == self) and callback ~= nil then
+        -- If we've clicked too early, ignore it.
+        if action_in_progress then
+            return
+        end
+
+        -- Lock this method for one second
+        action_in_progress = true
+        Wait.time(function()
+            action_in_progress = false
+        end, ACTION_LOCK_DELAY)
+        
+        callback(...)
+    end
+end
+
+function toggleLevelWrapper(player, level)
+    hoverWrapper(player, toggleLevel, level)
+end
+
+-- This isn't great, change it!
+function toggleLevel(level)
+    if not level then return end
+    before_all_toggle = nil
+
+    level = tonumber(level)
+
+    if level == 1 then
+        if is_unlocked['forge_level_1'] then lockLevel(level) else unlockLevel(level) end
+    elseif level == 2 then
+        if is_unlocked['forge_level_2'] then lockLevel(level) else unlockLevel(level) end
+    elseif level == 3 then
+        if is_unlocked['forge_level_3'] then lockLevel(level) else unlockLevel(level) end
+    end
+end
+
+function unlockLevel(level, deployGear)
+    if not level then return end
+    if deployGear == nil then deployGear = true end
+
+    local startLevel = getCurrentForgeLevel()
+
+    -- Nothing to do if this was already unlocked
+    if is_unlocked['forge_level_' .. level] == getCurrentForgeLevel() then
+        deployGear = false
+    end
+
+    if level == 1 then
+        is_unlocked['forge_level_1'] = true
+    elseif level == 2 then
+        is_unlocked['forge_level_1'] = true
+        is_unlocked['forge_level_2'] = true
+    elseif level == 3 then
+        is_unlocked['forge_level_1'] = true
+        is_unlocked['forge_level_2'] = true
+        is_unlocked['forge_level_3'] = true
+    else
+        return
+    end
+
+    for index = 1, level do
+        self.UI.setAttribute('level-' .. index .. '-button', 'image', IMAGE_URLS['forge_level_' .. index .. '_hide'])
+        -- self.UI.setAttribute('level-' .. index .. '-button', 'colors', '#FFFFFFFF|#00000099|#000000BB|rgba(0.78,0.78,0.78,0.5)')
+    end
+    -- Reset the cost
+    updateCostDisplay()
+
+    if deployGear then
+        hideForgeBags()
+        showForgeBags(level)
+    end
+end
+
+function lockLevel(level, removeGear)
+    if not level then return end
+    if removeGear == nil then removeGear = true end
+
+    local startLevel = getCurrentForgeLevel()
+
+    -- Nothing to do if this was already locked
+    if is_unlocked['forge_level_' .. level] == false then
+        removeGear = false
+    end
+
+    if level == 3 then
+        is_unlocked['forge_level_3'] = false
+    elseif level == 2 then
+        is_unlocked['forge_level_3'] = false
+        is_unlocked['forge_level_2'] = false
+    elseif level == 1 then
+        is_unlocked['forge_level_3'] = false
+        is_unlocked['forge_level_2'] = false
+        is_unlocked['forge_level_1'] = false
+    else
+        return
+    end
+
+    for index = 3, level, -1 do
+        self.UI.setAttribute('level-' .. index .. '-button', 'image', IMAGE_URLS['forge_level_' .. index .. '_unlock'])
+        -- self.UI.setAttribute('level-' .. index .. '-button', 'colors', '#FFFFFF00|#00000099|#000000BB|rgba(0.78,0.78,0.78,0.5)')
+    end
+    -- Reset the cost
+    updateCostDisplay()
+
+    if removeGear then
+        hideForgeBags()
+        showForgeBags(getCurrentForgeLevel())
+    end
+end
+
+function toggleAllWrapper(player)
+    hoverWrapper(player, toggleAll)
+end
+
+function toggleAll()
+    -- Check if you need to go back to a previous state
+    if before_all_toggle then
+        -- For each element, lock/unlock them as required
+        for key, value in pairs(before_all_toggle) do
+            if key:find('^element_') then
+                if value == true then
+                    unlockElement(key:gsub('element_', ''), false)
+                else
+                    lockElement(key:gsub('element_', ''), false)
+                end
+            end
+        end
+
+        if before_all_toggle['forge_level_3'] then
+            unlockLevel(3)
+        elseif before_all_toggle['forge_level_2'] then
+            lockLevel(3, false)
+            unlockLevel(2)
+        elseif before_all_toggle['forge_level_1'] then
+            lockLevel(2, false)
+            unlockLevel(1)
+        else
+            lockLevel(1)
+        end
+
+        before_all_toggle = nil
+    else
+        before_all_toggle = {}
+        -- Check if everything is unlocked
+        local everythingUnlocked = true
+
+        for key, isItUnlocked in pairs(is_unlocked) do
+            -- Save the initial state 
+            before_all_toggle[key] = isItUnlocked
+
+            if not isItUnlocked then
+                everythingUnlocked = false
+            end
+        end
+
+        if everythingUnlocked then
+            -- lock everything only if everything is unlocked
+            lockAll()
+        else
+            -- unlock everything
+            unlockAll()
+        end
+    end
+end
+
+function unlockAll()
+    -- Unlock everything
+    unlockLevel(3)
+
+    for elementKey, isItUnlocked in pairs(is_unlocked) do
+        if elementKey:find('^element_') and not isItUnlocked then
+            unlockElement(elementKey:gsub('element_', ''))
+        end
+    end
+end
+
+-- The other way around compared unlock, otherwise it just locks all first then hide the elements (which does nothing)
+function lockAll()
+    for elementKey, isItUnlocked in pairs(is_unlocked) do
+        if elementKey:find('^element_') and isItUnlocked then
+            lockElement(elementKey:gsub('element_', ''), false)
+        end
+    end    
+
+    -- Lock all levels
+    lockLevel(1)
+end
+
+function toggleElementWrapper(player, element)
+    hoverWrapper(player, toggleElement, element)
+end
+
+-- This isn't great, change it!
+function toggleElement(element)
+    if not element then return end
+    before_all_toggle = nil
+
+    if is_unlocked['element_' .. element] then
+        lockElement(element)
+    else
+        unlockElement(element)
+    end
+end
+
+function unlockElement(element, deployGear)
+    if not element then return end
+    if deployGear == nil then deployGear = true end
+
+    if is_unlocked['element_' .. element] then
+        -- Nothing to do
+        return
+    end
+
+    is_unlocked['element_' .. element] = true
+
+    self.UI.setAttribute('element-' .. element .. '-button', 'colors', '#FFFFFFFF|#CCCCCCFF|#999999FF|rgba(0.78,0.78,0.78,0.5)')
+
+    -- Reset the cost display (delayed because forge bags are hidden for a bit)
+    Wait.time(function()
+        updateCostDisplay()
+    end, BYPASS_IMAGE_LOAD)
+    
+
+    if deployGear then
+        showForgeBags(nil, element)
+    end
+end
+
+function lockElement(element, removeGear)
+    if not element then return end
+    if removeGear == nil then removeGear = true end
+
+    if not is_unlocked['element_' .. element] then
+        -- Nothing to do
+        return
+    end
+
+    is_unlocked['element_' .. element] = false
+
+    self.UI.setAttribute('element-' .. element .. '-button', 'colors', '#FFFFFF00|#00000099|#000000BB|rgba(0.78,0.78,0.78,0.5)')
+
+    -- Reset the cost display (NOT delayed because forge bags are put away right then)
+    updateCostDisplay()
+
+    if removeGear then
+        hideForgeBags(nil, element)
+    end
+end
+
+function hideForgeBags(required_level, required_element)    
+    for index = 1, 3 do
+        if required_level == nil or index == required_level then
+            local requiredTags = {'forge_level_' .. index}
+            if required_element ~= nil then
+                table.insert(requiredTags, 'element_' .. required_element)
+            end
+
+            for _, object in ipairs(getObjectsWithAllTags(requiredTags)) do
+                object.attachInvisibleHider('hide', true)
+                object.getComponent('AudioSource').set('mute', true)
+                forge_bag.putObject(object)
+            end
+        end
+    end
+end
+
+function showForgeBags(required_level, required_element)
+    if not required_level then 
+        required_level = getCurrentForgeLevel()
+    end
+
+    if required_level <= 0 then
+        return
+    end
+    
+    local unusedSnapPoints = self.getSnapPoints()
+
+    for _, object in ipairs(forge_bag.getObjects()) do
+        -- Scan tags
+        local type_tag, element_tag, level = nil, nil, nil
+        for _, tag in ipairs(object.tags) do
+            if tag == 'character_dareon' or tag == 'character_mirah' or tag == 'character_thoreg' or tag == 'character_ljonar' or tag == 'character_heleren' or tag == 'character_karah'
+                or tag == 'actor_helm' or tag == 'actor_armor' or tag == 'actor_accessory_1' or tag == 'actor_accessory_2' or POTION_TYPES[tag] == true then    
+                type_tag = tag
+            elseif tag == 'element_fire' or tag == 'element_horn' or tag == 'element_coral' or tag == 'element_crystal' or tag == 'element_thunder' or tag == 'element_metal' 
+                or tag == 'element_feather' or tag == 'element_venom' or tag == 'element_ice' then
+                element_tag = tag
+            elseif tag == 'forge_level_1' then
+                level = 1
+            elseif tag == 'forge_level_2' then
+                level = 2
+            elseif tag == 'forge_level_3' then
+                level = 3
+            end
+        end
+
+        -- If we found all 3 tags or it's a potion, place the element
+        if (((type_tag and element_tag and is_unlocked[element_tag] and (required_element == nil or ('element_' .. required_element) == element_tag)) 
+                or (POTION_TYPES[type_tag] == true)) and level) and level == required_level then
+            for index, snapPoint in ipairs(unusedSnapPoints) do
+                local isCorrectType, isCorrectElement = false, false
+                for _, tag in ipairs(snapPoint.tags) do
+                    if tag == type_tag then
+                        isCorrectType = true
+                    elseif tag == element_tag then
+                        isCorrectElement = true
+                    else
+                        -- If one tag is wrong, we can move on
+                        break
+                    end
+                end
+
+                if isCorrectType and (isCorrectElement or POTION_TYPES[type_tag]) then
+                    -- if isCorrectElement then
+                    --     self.UI.setAttribute('cost-' .. required_element .. '-' .. level, 'active', true)
+                    -- else
+                    --     self.UI.setAttribute('cost-potion', 'active', true)
+                    -- end
+
+                    forge_bag.takeObject({
+                        guid = object.guid,
+                        position = self.positionToWorld(snapPoint.position),
+                        rotation = {0.00, 180.00, 0.00},
+                        smooth = false,
+                        callback_function = function(spawnedObject)
+                            spawnedObject.attachInvisibleHider('hide', true)
+                            spawnedObject.getComponent('AudioSource').set('mute', true)
+                            spawnedObject.setLock(true)
+
+                            -- Bypass image load
+                            Wait.time(function()
+                                spawnedObject.attachInvisibleHider('hide', false)
+                                spawnedObject.getComponent('AudioSource').set('mute', false)
+                            end, BYPASS_IMAGE_LOAD)
+                        end
+                    })
+
+                    -- Snap point set as used, this is fine because we're stopping the loop right away
+                    table.remove(unusedSnapPoints, index)
+                    break
+                end
+            end
+        end
+    end
+end
+
+function updateCostDisplay()
+    local currentLevel = getCurrentForgeLevel()
+
+    for index = 1, 3 do
+        for elementKey, isUnlocked in pairs(is_unlocked) do
+            if elementKey:find('^element_') then
+                self.UI.setAttribute('cost-' .. elementKey:gsub('element_', '') .. '-' .. index, 'active', isUnlocked and index == currentLevel)
+            end
+        end
+    end
+
+    if currentLevel >= 1 then
+        self.UI.setAttribute('cost-potion', 'active', true)
+    else
+        self.UI.setAttribute('cost-potion', 'active', false)
+    end
+end
+
+function getCurrentForgeLevel()
+    if is_unlocked['forge_level_3'] then
+        return 3
+    elseif is_unlocked['forge_level_2'] then
+        return 2
+    elseif is_unlocked['forge_level_1'] then
+        return 1
+    else
+        return 0
+    end
+end
