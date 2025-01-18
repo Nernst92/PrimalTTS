@@ -1,0 +1,883 @@
+--game static variable
+TurnOrderUIisHidden = true
+CampaignUIisHidden = true
+MonsterBookGUID = "d3d7fe"
+CampaignSheetGUID = "9c5742"
+CombatBoardGUID = "cf5fc6"
+ZoneBehave = {"f1a17b", "08c643","e76a94"}
+RuleBookPDF = "5b5068"
+disableSave=false
+
+--current combat/Campaign variable
+CurrentMonster= "Vyraxen"
+CurrentRound = 0
+FightLevel = "0"
+MonsterData = {	}
+
+--static Dictionnaries/arrays
+Terrains={
+front = {"terrain_1","terrain_2","terrain_3", },
+right = {"terrain_4","terrain_5","terrain_6", },
+back = {"terrain_7","terrain_8","terrain_9", },
+left = {"terrain_10","terrain_11","terrain_12", },
+}
+
+Dictionnary = {
+	{"Acceleration token", pdf = RuleBookPDF, page=107},
+	{"Acheivement", pdf = RuleBookPDF, page=62},
+	{"Acheivement system", pdf = RuleBookPDF, page=57},
+	{"Action card", pdf = RuleBookPDF, page=10},
+	{"Playing Action card", pdf = RuleBookPDF, page=22},
+	{"Action card ID", pdf = RuleBookPDF, page=50},
+	{"Action phase", pdf = RuleBookPDF, page=20},
+	{"Action keyword", pdf = RuleBookPDF, page=106},
+	{"Active Player", pdf = RuleBookPDF, page=18},
+	{"Adjacent sector", pdf = RuleBookPDF, page=107},
+}
+
+allZone = {
+	-- food and wealt are acceleration and struggle tokens 
+AccelData = {tag="Accel", zoneGUID="2a98da", textGUID="19b372"},
+StruggleData = {tag="Struggle", zoneGUID="428ead", textGUID="b32e80"},
+	behaviorUI1Data = {tag="Behavior", zoneGUID = "f1a17b", UIname = "behave1"},
+	behaviorUI2Data = {tag="Behavior", zoneGUID = "08c643", UIname = "behave2"},
+	behaviorUI3Data = {tag="Behavior", zoneGUID = "e76a94", UIname = "behave3"},
+	
+}
+  
+BehaviorDescription = {
+	["https://steamusercontent-a.akamaihd.net/ugc/2452852111556058232/617203190F2145AEE18455891FB5B41209E6BD94/"] = "Triggers when you play a Attack (red) card", 
+	["https://steamusercontent-a.akamaihd.net/ugc/2452852111559736514/8DE2F02F366A0D2CB1264A35E0A98A820DDCD036/"] = "Triggers when you play a Maneuver (blue) card", 
+	["https://steamusercontent-a.akamaihd.net/ugc/2452852111559724451/0FDA53FFF2BFF38EAFDAEFABC30B4BD9522EA1B2/"] = "Triggers when you play a Dodge (green) card", 
+	["https://steamusercontent-a.akamaihd.net/ugc/2452852111559738675/A0C90AAF5A5160DEDDFBC02E9FDBF7E18200937E/"] = "Triggers when you play a Parry (yellow) card", 
+	["https://steamusercontent-a.akamaihd.net/ugc/2452852111559722258/60A67E00A895B42BB39FD2319C9D1470797F3A9B/"] = "Triggers when you gain the Aggro token",
+	["https://steamusercontent-a.akamaihd.net/ugc/2452852111559737991/D6A43F7E0DAF187B944A040BF84A0D5B3BC41C68/"] = "Triggers when you play a Damage card (Red or Blue)" ,
+	["https://steamusercontent-a.akamaihd.net/ugc/2452852111559727035/F4AB07C543E2813FBF3B259E5EFDB137CD8770A9/"] = "Triggers when you play two Damage card in a row (Red or Blue)" ,
+	["https://steamusercontent-a.akamaihd.net/ugc/2452852111559723262/11B6814A51F5474342C43023EA0FB57F64545F26/"] = "Triggers when you play a Defensive card (green or yellow)" ,
+	["https://steamusercontent-a.akamaihd.net/ugc/2452852111559726274/A555F886EBDDCB1B0E6CF5EC0B369D426E9D6746/"] = "Triggers when you play two Defensive card (green or yellow) in a row " ,
+	["https://steamusercontent-a.akamaihd.net/ugc/2452852111559728634/D1BAD234BF2812CA30C2923D5AC7E4DE49A52AB8/"] = "Triggers in the End of Round phase" ,
+	["https://steamusercontent-a.akamaihd.net/ugc/2452852111559733007/C9578229C5D3B0C7EB431B40DD4D9302EF0CCB50/"] = "Triggers when drafted" ,
+	["https://steamusercontent-a.akamaihd.net/ugc/2452852111559745713/7E46CE2DD23CF4CA89C18946CAFDE5E7EE5CF6A1/"] = "Triggers when the monster pivot" ,
+	["https://steamusercontent-a.akamaihd.net/ugc/2452852111559730908/45AF0AB5D6E2FC61AA62EEEC1D1C003465C957D6/"] = "Triggers when you start your turn in front sector of the monster" ,
+	["https://steamusercontent-a.akamaihd.net/ugc/2452852111559737310/4117293ACF34F339124FF95FC029613EEB4F8E01/"] = "Triggers when you move" ,
+	["https://steamusercontent-a.akamaihd.net/ugc/2452852111559735346/68371C9A4105F64B3C1651E9EBC72B4551B1FBE4/"] = "Triggers when you move in a sector with water" ,
+	["https://steamusercontent-a.akamaihd.net/ugc/2452852111559732177/EAEC1B8619BB25D425DB54E16200E7698479C960/"] = "Triggers when you dont have any cards left in your hand" ,
+	["https://steamusercontent-a.akamaihd.net/ugc/2452852111559729521/EBF77250CBC0937ACE62E5CA5EE40B6894B108AE/"] = "Triggers during attrition phase" ,
+	["https://steamusercontent-a.akamaihd.net/ugc/2499015733551843140/89B11196A6A96F74CB856B8FDA9DDE5371C03601/"] = "Draft a behavior card" ,
+	["https://steamusercontent-a.akamaihd.net/ugc/2452852111559427251/DBC558D9044F317A8D6C70ABC23374C9C9C37D66/"] = "Triggers when another card trigger" ,
+	["https://steamusercontent-a.akamaihd.net/ugc/2452852111559730265/68C05667939A937D5723F33FF980EB661A8977A2/"] = "Triggers when you start your turn on the side sector of a monster" ,
+	["https://steamusercontent-a.akamaihd.net/ugc/2452852111559731494/5FA45BDB091EB12421C731327E3A61FF36495116/"] = "Triggers when someone is on the side sector of the monster when you start your turn" ,
+	["https://steamusercontent-a.akamaihd.net/ugc/2452852111559741580/D5BAD0FFE9E8E019A8F00B5B68ED1FF67FCF583C/"] = "Triggers when someone is on the back sector of the monster when you start your turn" ,
+	["https://steamusercontent-a.akamaihd.net/ugc/2452852111559746355/98CA1BDA3D617C3D4D876B1A4170A3274CF6DE3B/"] = "Triggers when you start your turn in water" ,
+	["https://steamusercontent-a.akamaihd.net/ugc/2452852111559740769/85B163EF2C8F02CED3E55C3B71C2E29E4C50FC03/"] = "Triggers when you start your turn in the back sector of the monster" ,
+	["https://steamusercontent-a.akamaihd.net/ugc/2549682039797939246/E37B30E0FCE7C2E26C24DA2E52FB8BAA97314F9B/"] = "Triggers when you have no more cards in hand OR you play a Dodge (green) card",
+	["https://steamusercontent-a.akamaihd.net/ugc/2549682039797926049/899D5957BD9DA1D22EC1DA735B27DFDE776247B9/"] = "Triggers when you gain the Aggro OR when you start your turn in front sector of the monster",
+	["https://steamusercontent-a.akamaihd.net/ugc/2514782313707938763/A35216A32C62594408CE625CF00091A6A6C333A2/"] = "Triggers when you gain the Aggro OR when you have no more card in hand",
+	["https://steamusercontent-a.akamaihd.net/ugc/2514782948727284265/F26FC15B3213217809FA164E50B91C113511F0AA/"] = "Triggers when you are threatened OR when you start your turn on the side sector of the monster",
+	["https://steamusercontent-a.akamaihd.net/ugc/2549682039797932158/3BBF71B0FB754355A0B19FD5071CD12A4976B806/"] = "Triggers when you are threatened OR when you start your turn on the back sector of the monster",
+	["https://steamusercontent-a.akamaihd.net/ugc/2514782313707940714/FE3F3F0C8FED4C16936FBEC687331AB3155A0C1B/"] = "Triggers when you are threatened OR when you play a Defensive card (green or yellow)",
+	["https://steamusercontent-a.akamaihd.net/ugc/2549682039797947019/F968EA586683C55CB46A1B893F8C4E0A99DB7ED4/"] = "Triggers when you play a red card in middle of two other cards ",
+	["https://steamusercontent-a.akamaihd.net/ugc/2549682039798556808/DE98B5A807CDBEDE7268489F04B7688263909B39/"] = "Triggers when you play two Attack (red) card",
+}
+ 
+levelsTag = { 
+	["0"] = "_p", 
+	["1"] = "_1", 
+	["2"] = "_2", 
+	["3"] = "_3", 
+  }
+  
+featuresData = {
+  {
+    actor_tag = "actor_board",
+    type = "board",
+    		position = {20.99, 0.95, 11.05},
+    		rotation = {0, 180, 0},
+    		locked = true, 
+  },{
+    actor_tag = "actor_board2",
+    type = "board2",
+    position = {32.25, 1.2, 10.41},
+    rotation = {0, 180, 0},
+    locked = true
+  },
+  {
+    actor_tag = "actor_mini",
+    type = "mini",
+    position = {-1.52, 0.88, 10.38},
+    rotation = {0.00, 135.00, 0.00}
+  },
+  {
+    actor_tag = "actor_hard",
+    type = "spawn",
+    position = {23.80, 4, 13.13},
+    rotation = {0.00, 226.21, 180.00}
+  },
+  {
+    actor_tag = "actor_nightmare",
+    type = "spawn",
+    position = {27.92, 0.69, 3.86}
+  },
+  {
+    actor_tag = "actor_stand",
+    type = "spawn",
+    position = {0, 1.9, 27.71}
+  },
+  {
+    actor_tag = "actor_debility",
+    type = "spawn",
+    position = {31.60, 0.89, 3.70},
+    rotation = {0, 180, 180}
+  },
+  {
+    actor_tag = "actor_objective",
+    type = "spawn",
+    position = {24.68, 1.2, 6.46},
+    rotation = {0.00, 180.00, 0.00}
+  },
+  {
+    actor_tag = "actor_threat",
+    type = "spawn",
+    position = {20.97, 0.99, 6.44},
+    rotation = {0.00, 180.00, 0.00}
+  },
+  {
+    type = "stances",
+    position = {17.31, 1.3, 6.47},
+    rotation = {0.00, 180.00, 0.00}
+  },
+  {
+    type = "behaviors",
+    position = {13.9, 1.2, 10.41},
+    rotation = {0, 180, 180}
+  },
+  {
+    type = "attrition",
+    position = {0,0,0},
+    rotation = {0, 180, 180}
+  },
+  {
+    type = "behavior_special",
+  },
+}
+
+
+--current combat/Campaign Dictionnaries
+ActivePlayer= {
+	Blue = {isActive = false, boardGUID = "8cbb53", color = "Blue", button = "btn1", isDone = false},
+	Green = {isActive = false, boardGUID = "3954b5", color = "Green", button = "btn2",  isDone = false},
+	Yellow = {isActive = false, boardGUID = "c38413", color = "Yellow", button = "btn3",  isDone = false},
+	Orange = {isActive = false, boardGUID = "2194d4", color = "Orange", button = "btn4",  isDone = false},
+	Red = {isActive = false, boardGUID = "2f7792", color = "Red", button = "btn5",  isDone = false},
+}
+
+----- Search Bar for Rules / Glossary -----
+
+function searchdone() 
+    res = Global.UI.getAttribute("searchfield", "text")
+end 
+
+function FilterResult(player, value, id)
+    local results = {}
+ 
+	if value == "" or value == nil then 
+		results = {}
+	else 
+		for _, entry in ipairs(Dictionnary) do
+			local term = entry[1]
+
+			if string.find(term:lower(), value:lower(), 1, true) then
+				table.insert(results, entry)
+				if #results > 4 then 
+					break
+				end 
+			end
+		end
+	end 
+	
+    
+    
+	for i=1,5,1 do 
+		if results[i] then 
+			Global.UI.setAttribute("result" .. i, "active" , true)
+			Global.UI.setAttribute("result" .. i, "text" , results[i][1])
+		else
+			Global.UI.setAttribute("result" .. i, "active" , false)
+			Global.UI.setAttribute("result" .. i, "text" , "")
+		end
+	end 
+
+end
+
+--- player setup ---
+
+function SetActivePlayer(pColor)
+    ActivePlayer[pColor].isActive = true
+	StartTurnUI()
+end 
+
+
+--- monster setups related functions 
+
+function CleanMonster()
+	MonsterData = {}
+	CurrentMonster= ""
+	FightLevel = "0"
+	CurrentRound = 0
+
+  local objs = getAllObjects()
+  for i,v in ipairs(objs) do
+    if v.hasTag("monster_spawn") then
+      v.destruct()
+    end
+  end
+
+    getObjectFromGUID(CombatBoardGUID).call("ResetTimer")
+end
+
+function SetupMonster(params)
+    -- params = {monstername, Level, explevel, questlevel, isNightmare}
+    
+    --set # of active players 
+    local nb = getPlayersNb()
+    getObjectFromGUID(MonsterBookGUID).call("setPlayers",nb)
+
+   -- set current fight params 
+    CurrentMonster = params[1]
+    FightLevel= params[2]
+    explevel = params[3] or ""
+    questlevel = params[4] or ""
+    isNightmare = params[5] or false
+
+    myparams = {CurrentMonster,	FightLevel,explevel,questlevel,isNightmare}
+    
+    -- set monsters object from the setup bag
+    SpawnMonster(myparams)
+
+end 
+
+function SpawnMonster(params)
+    local wantedname = params[1]
+    local currentLevel = params[2]
+    local MonsterBook = getObjectFromGUID(MonsterBookGUID)
+	
+	MonsterBook.takeObject({smooth = false,position={100,100,100},  
+        callback_function= function(MainBag)
+            MainBag.setLock(true)
+            for _,mbag in pairs(MainBag.getObjects()) do 
+                if mbag.name == wantedname then
+                    MainBag.takeObject({guid = mbag.guid, position={27.13, 0.57, 16.99}, 
+                        smooth = false, 
+                        callback_function= function(storebag)
+                            storebag.addTag("monster_spawn")
+							spawnMonsterFromBag(storebag, tonumber(currentLevel), params)
+                        end
+                    })
+                    break
+                end
+            end     
+    
+            MainBag.destruct()
+        end
+    }) 
+
+   getObjectFromGUID(CombatBoardGUID).call("NextRound")
+
+	SetMonsterData(params)
+end 
+
+function SetMonsterData(params)
+
+	local AllData = getObjectFromGUID(MonsterBookGUID).getTable("Data")
+    MonsterData = AllData["Monsters"][params[1]]
+	
+	local level = params[2]
+	local ExpeditionType = params[3] or ""
+	local QuestNumber = params[4] or ""
+	local isNightmare =  params[5] or false
+
+	
+    if ExpeditionType ~= "" then 
+    	--set expedition specific stuff. for now, only terrain
+		for i, terrain in pairs(MonsterData[ExpeditionType]["Terrain"]) do 			
+			Wait.time(function() addTerrainInZone(terrain) end, i)
+		end 
+	else
+		local QuestData = AllData["Quests"][tostring(QuestNumber)]
+		
+		--set the terrain and other specific stuff by quest
+		for i, terrain in pairs(QuestData["Terrain"]) do 
+			Wait.time(function() addTerrainInZone(terrain) end, i)
+		end 
+	end 
+end 
+
+function spawnMonsterFromBag(bag, level, params)
+    for i,data in ipairs(featuresData) do
+		if data.type == "mini" then 
+            spawnMiniFromBag(data, bag) 
+        elseif data.type == "board" then 
+            spawnActorFromBag(data, bag) 
+        elseif data.type == "board2" then 
+			spawnActorFromBag(data, bag) 
+        elseif data.type =="spawn" then
+            spawnActorFromBag(data, bag)
+        elseif data.type == "stances" then
+            spawnStance(data, bag, level)
+        elseif data.type == "behaviors" then
+            spawnBehaviors(data, bag, level)
+        elseif data.type == "attrition" then 
+            spawnAttrition(data, bag, level) 
+        elseif data.type == "behavior_special" then 
+            spawnSpecBehavior(data, bag, level) 
+        end
+    end
+end
+
+function spawnMiniFromBag(actorData, bag)
+	
+	local objectData = getObjectDataByTag(bag, actorData.actor_tag, actorData.OtherTag)
+	if objectData == nil then
+		return
+	end
+	rot = 0
+
+	if objectData.gm_notes ~= "" and objectData.gm_notes then 
+		rot = objectData.gm_notes
+	end 
+	local lrotation = {0, 0, 0}
+	if rot then 
+		lrotation = {0,rot,0}
+	else 
+		lrotation = actorData.rotation or {0, 0, 0}
+	end
+  bag.takeObject({
+    position = actorData.position,
+    rotation = lrotation,
+    smooth = false,
+    guid = objectData.guid,
+    callback_function = function(actor)
+      actor.addTag("monster_spawn")
+      if actorData.locked then
+        actor.setLock(actorData.locked)
+      end
+      if callback != nil then
+        callback(actor)
+      end
+    end
+  })
+end
+
+function spawnSpecBehavior(data, bag, level)
+  local objectData = getObjectDataByTag(bag, "actor_behavior_special_1")
+  local object2Data = getObjectDataByTag(bag, "actor_behavior_special_2")
+
+    if objectData ~= nil then
+  bag.takeObject({
+    position = getSnapPos("actor_behavior_special_1"),
+    rotation = actorData.rotation or {0, 0, 0},
+    smooth = false,
+    guid = objectData.guid,
+    callback_function = function(actor)
+      actor.addTag("monster_spawn")
+
+    end
+  })
+    end
+
+     if object2Data ~= nil then
+  bag.takeObject({
+    position = getSnapPos("actor_behavior_special_2"),
+    rotation = actorData.rotation or {0, 0, 0},
+    smooth = false,
+    guid = object2Data.guid,
+    callback_function = function(actor)
+      actor.addTag("monster_spawn")
+
+    end
+  })
+    end
+end
+
+function spawnAttrition(featureData, bag, level)
+	local attpos = getWorldPosOfSnapOnObj({"a323b1", "actor_attrition"})
+	actorData = {
+    position = attpos,
+    rotation = featureData.rotation,
+    actor_tag = "actor_attrition",
+  }
+
+  spawnActorFromBag(actorData, bag, function(actor)
+	actor.shuffle()
+  end)
+	
+end 
+
+function spawnBehaviors(featureData, bag, level)
+	spawnActorFromBag(
+	{
+		position = featureData.position,
+		rotation = featureData.rotation,
+		actor_tag = "actor_behavior",
+		OtherTag = levelsTag[tostring(level)],
+	}
+	, bag
+	, function(deck) 
+		deck.shuffle() 
+
+		for _, zoneGUID in pairs(ZoneBehave) do 
+			local zpos = getObjectFromGUID(zoneGUID).getPosition()
+			zpos[2] = zpos[2]+4
+			deck.takeObject({smooth = false, position = zpos})
+		end 
+	end 
+	)
+end
+
+function spawnStance(featureData, bag, level)
+
+  local actorData = {
+    position = featureData.position,
+    rotation = featureData.rotation,
+    actor_tag = "actor_stance",
+    	OtherTag = levelsTag[tostring(level)],
+  }
+
+  spawnActorFromBag(actorData, bag, function(actor)
+    Wait.time(function() OnStateChange(actor.getStateId()) end, 1)
+  end)
+end
+
+function spawnActorFromBag(actorData, bag, callback)
+  local objectData = getObjectDataByTag(bag, actorData.actor_tag, actorData.OtherTag)
+  if objectData == nil then
+    return
+  end
+
+  bag.takeObject({
+    position = actorData.position,
+    rotation = actorData.rotation or {0, 0, 0},
+    smooth = false,
+    guid = objectData.guid,
+    callback_function = function(actor)
+      actor.addTag("monster_spawn")
+      if actorData.locked then
+        actor.setLock(actorData.locked)
+      end
+      if callback != nil then
+        callback(actor)
+      end
+    end
+  })
+end
+
+function getObjectDataByTag(bag, tag, otherTag)
+	local other = otherTag or false
+	local data = bag.getObjects()
+	local maybe = "" 
+	
+	for i,v in ipairs(data) do
+		for _, t in ipairs(v.tags) do
+			if t == tag then
+				if other then 
+					maybe = v
+					for c,tagtwo in ipairs(maybe.tags) do 
+						if tagtwo == other then 
+							return v
+						end 
+					end 
+				else 
+					return v
+				end
+			end
+		end
+	end
+end
+
+
+----- utility fonction -----
+
+function NextRound()
+	 getObjectFromGUID(CombatBoardGUID).call("NextRound")
+	 CurrentRound = CurrentRound + 1
+end 
+
+function addTerrainInZone(params) 
+	-- params = {tokenbagname, zone}
+   --find available snap point
+    for _,zonesnap in pairs(Terrains[params[2]]) do 
+        local pos = getWorldPosOfSnapOnObj({CombatBoardGUID, zonesnap})
+		local isEmpty = true
+		local objs = GetObjOnPos({pos})
+
+		for _, obj in pairs(objs) do 
+			if obj.hit_object.getLock() then 
+				-- ignore
+			else 
+				isEmpty = false 
+				break
+			end 
+		end 
+
+        if isEmpty then  
+			addTokensOnPos(1, params[1], pos)
+			break
+        end 
+    end
+end
+
+function getCampaignLevel()
+	lvl = getObjectFromGUID(CampaignSheetGUID).call("getLevel")
+    return lvl
+end 
+
+function addStruggle(nbr)
+	addTokensOnPos(nbr, "bag_struggle" ,getObjectFromGUID(allZone.StruggleData.zoneGUID).getPosition() ) 
+end 
+
+function addAccel(nbr)
+	addTokensOnPos(nbr, "bag_accel" ,getObjectFromGUID(allZone.AccelData.zoneGUID).getPosition() ) 
+end 
+
+function removeStruggle()
+    for _, tok in pairs(getObjectFromGUID(allZone.StruggleData.zoneGUID).getObjects()) do 
+        if tok.hasTag("Struggle") then 
+            tok.destruct()
+            return true
+        end 
+    end 
+
+    return false
+end 
+
+function removeAccel()
+    for _, tok in pairs(getObjectFromGUID(allZone.AccelData.zoneGUID).getObjects()) do 
+        if tok.hasTag("Accel") then 
+            tok.destruct()
+            return true
+        end 
+    end 
+
+    return false
+end 
+
+function addTokensOnPos(nbr, tokenbagtag, tokenpos)
+	local tokenBags = getObjectsWithTag(tokenbagtag)
+	if #tokenBags ~= 1 then
+		broadcastToAll('Error : Missing bag or duplicate tag for ' .. tokenbagtag .. '.', Color.Red)
+		return
+	end
+		
+	for x=1, nbr, 1 do 
+		tokenBags[1].takeObject({position = tokenpos, smooth = false})
+	end
+end
+
+function getPlayersNb()
+    	local nb = 0
+
+    	for _, p in pairs(ActivePlayer) do 
+        		if p.isActive then 			nb = nb + 1 		end 
+    	end 
+	
+    	return nb
+end 
+ 
+function getWorldPosOfSnapOnObj(params)
+    -- params = { object guid, tag name to find }
+
+    obj = getObjectFromGUID(params[1]) 
+        
+    for _, s in pairs(obj.getSnapPoints()) do 
+        for _, tag in pairs(s.tags) do 
+            if tag == params[2] then 
+                return obj.positionToWorld(s.position)
+            end
+        end
+    end 
+end
+
+function getAllSnapPos(t)
+	local snaps ={}
+	for _, s in pairs(Global.getSnapPoints()) do 
+		for _, tag in pairs(s.tags) do 
+            if string.lower(tag) == string.lower(t) then 
+                table.insert(snaps, s.position)
+            end
+        end
+    end 
+	return snaps
+end 
+
+function getSnapPos(t)
+	for _, s in pairs(Global.getSnapPoints()) do 
+		for _, tag in pairs(s.tags) do 
+            if string.lower(tag) == string.lower(t) then 
+                return s.position
+            end
+        end
+    end 
+
+end 
+
+function GetAllObjOnSnap(t)
+    local olist = {}
+    for _, pos in pairs(getAllSnapPos(t)) do 
+        table.insert(olist, {pos, GetObjOnPos({pos})})
+    end
+	
+    return olist
+end 
+
+function GetObjOnPos(params)
+ -- params = {position, name to find (optional)}
+	if params then 
+        local objname = params[2] or "nil"
+        local center = params[1]
+
+        center.y = center.y + 10
+		objs = Physics.cast({	origin = center,		direction = { x = 0, y = -1, z = 0 },		type= 1,	})
+		
+		 if objname~= "nil" then 
+			for _, obj in pairs(objs) do
+				if obj.hit_object.getName() == objname then
+                    return obj.hit_object
+                end
+			end
+		else
+			return objs
+        end
+	end  
+	
+	return false
+end
+
+
+--- game load / save_state
+
+function onLoad(script_state)
+
+  megaFreeze() -- Make objects non-interactive
+  
+  if disableSave==true then script_state="" end
+    if script_state ~= "" then
+        local loaded_data = JSON.decode(script_state)
+		ActivePlayer = loaded_data.ActivePlayer
+        CurrentMonster = loaded_data.CurrentMonster
+		CurrentRound = loaded_data.CurrentRound
+		FightLevel = loaded_data.FightLevel
+		MonsterData = loaded_data.MonsterData
+    else
+		ActivePlayer= {
+			Blue = {isActive = false, boardGUID = "72c272", color = "Blue", button = "btn1", isDone = false},
+			Green = {isActive = false, boardGUID = "9056f6", color = "Green", button = "btn2",  isDone = false},
+			Yellow = {isActive = false, boardGUID = "bfe540", color = "Yellow", button = "btn3",  isDone = false},
+			Orange = {isActive = false, boardGUID = "0d0fd7", color = "Orange", button = "btn4",  isDone = false},
+			Red = {isActive = false, boardGUID = "f84b24", color = "Red", button = "btn5",  isDone = false},
+		}
+		CurrentMonster= "Vyraxen"
+		CurrentRound = 0
+		FightLevel = "0"
+		MonsterData = {	}
+    end
+	
+	SetBehavior()
+end
+
+function megaFreeze()
+    local megaFreezeIT = {'dff000','095652',  -- Black Panels
+    }
+
+	--megaFreeze ACTIVATE!
+	for i=1, #megaFreezeIT, 1 do
+		obj = getObjectFromGUID(megaFreezeIT[i])
+		if obj ~= nil then
+			obj.interactable = false
+			obj.tooltip = false
+		end
+	end
+ end
+
+function onSave()
+    saved_data = JSON.encode({ActivePlayer = ActivePlayer, CurrentMonster = CurrentMonster,CurrentRound=CurrentRound,FightLevel=FightLevel,MonsterData=MonsterData})
+    if disableSave==true then saved_data="" end
+    self.script_state = saved_data
+	return saved_data
+end 
+
+function SetBehavior()
+	for i,zGUID in pairs({"f1a17b","08c643","e76a94"}) do
+		zone = getObjectFromGUID(zGUID)
+		for _, obj in pairs(zone.getObjects()) do 
+			if obj.hasTag("actor_behavior") then 
+				local img = obj.getVar("TokenImg")
+				Global.UI.setAttribute("behave"..i, "image", img )
+				Global.UI.setAttribute("behave"..i, "tooltip", BehaviorDescription[img])
+						
+				for _, p in pairs(ActivePlayer) do 
+					if p.isActive then 
+						local board = getObjectFromGUID(p.boardGUID)
+						board.UI.setAttribute("behave"..i, "image", img )
+					end 
+				end 
+			end
+		end
+	end
+end 
+
+
+ ---events handling----
+ function onObjectStateChange(object, old_state_guid)
+    if object.hasTag("actor_stance") then 
+        OnStateChange(object.getStateId())
+    end
+end
+
+function OnStateChange(StateId)
+
+        local stance = MonsterData["FightLevel"][tostring(FightLevel)]["Stances"][tostring(StateId)]
+
+        local FigPos = getWorldPosOfSnapOnObj({CombatBoardGUID, "actor_mini"})
+
+        local actor = GetObjOnPos({FigPos, CurrentMonster})
+
+	    for _,stpair in pairs(stance.Colors) do
+            actor.UI.setAttribute(stpair[1],"color",tostring(stpair[2]))
+        end
+		
+		broadcastToAll(stance["onSetup"]["broadcast"], Color.Orange)
+		
+		Wait.time(function()
+		for _, stanceterrain in pairs(stance["onSetup"]["Terrain"]) do 
+			 addTerrainInZone(stanceterrain)
+		end 
+		end, 1)
+		
+		--wait a bit so the terrain doesnt get mixed up and is detected
+		Wait.time(function()
+		for _, stanceAction in pairs(stance["onSetup"]["Actions"]) do 
+		--_G invoke the function based on the string set in the data
+			 _G[stanceAction[1]](stanceAction[2] or nil)
+		end 
+		end, 2)
+--    end
+
+    broadcastToAll("Remember to change the Peril and the Objective cards as needed when you swap stance", Color.Orange)
+
+end
+
+function onObjectEnterZone(zone, object)
+	local isUnique = true
+
+	for i, data in pairs(allZone) do
+		--handle stuggle and acceleration token zone 
+		if (data.tag == "Struggle" or data.tag == "Accel") and data.zoneGUID == zone.guid then 
+			local count = #zone.getObjects()
+			local text = getObjectFromGUID(data.textGUID)
+			text.TextTool.setValue(tostring(count))   
+			 break 
+		--handle behaviors
+		elseif data.tag == "Behavior" and data.zoneGUID == zone.guid then		
+			for _,obj in pairs(zone.getObjects()) do 
+				if obj.hasTag("actor_behavior") then
+					if object.guid == obj.guid then 
+						--this is my object
+					else 
+						isUnique = false 
+					end
+				end
+			end 
+			
+			if isUnique then 
+				local img = object.getVar("TokenImg")
+				Global.UI.setAttribute(data.UIname, "image", img )
+				Global.UI.setAttribute(data.UIname, "tooltip", BehaviorDescription[img])
+				
+				for _, p in pairs(ActivePlayer) do 
+					if p.isActive then 
+						local board = getObjectFromGUID(p.boardGUID)
+						board.UI.setAttribute(data.UIname, "image", img )
+					end 
+				end 
+			end
+			break 
+		end 
+	end  
+ end
+ 
+function onObjectLeaveZone(zone, leave_object)
+	local isUnique = true
+	
+	for i, data in pairs(allZone) do
+		--handle stuggle and acceleration token zone 
+		if (data.tag == "Struggle" or data.tag == "Accel") and data.zoneGUID == zone.guid then 
+			local count = #zone.getObjects()
+			local text = getObjectFromGUID(data.textGUID)
+			text.TextTool.setValue(tostring(count))  
+			break
+		--handle behaviors
+		elseif data.tag =="Behavior" and data.zoneGUID == zone.guid then 
+			for _,obj in pairs(zone.getObjects()) do 
+				if obj.hasTag("actor_behavior") then
+					if leave_object.guid == obj.guid then 
+						-- my object 
+					else 
+						isUnique = false 
+					end 
+				end
+			end 
+			
+			if isUnique then 
+				Global.UI.setAttribute(data.UIname, "image", "Question" )
+				Global.UI.setAttribute(data.UIname, "tooltip", "Draft a new Behavior card" )
+				for _, p in pairs(ActivePlayer) do 
+					if p.isActive then 
+						local board = getObjectFromGUID(p.boardGUID)
+						board.UI.setAttribute(data.UIname, "image", "Question" )
+					end 
+				end 
+			end
+			break 
+		end 	
+	end  
+ end
+ 
+ 
+ ---ui stuff---
+function StartTurnUI()
+	for i, aplayer in pairs(ActivePlayer) do 
+		Global.UI.setAttribute(aplayer.button .. "_row", "active", aplayer.isActive)	
+	end 
+ end 
+ 
+function TurnOrderShow()  
+    Global.UI.setAttribute("TurnOrder", "active", TurnOrderUIisHidden) 
+	StartTurnUI()
+    TurnOrderUIisHidden = not TurnOrderUIisHidden    
+end 
+
+function CampaignShow()  
+    Global.UI.setAttribute("CampaignPanel", "active", CampaignUIisHidden) 
+    CampaignUIisHidden = not CampaignUIisHidden  
+end 
+
+function changecolorreset(plr, toggleState, btnreset)
+Global.UI.setAttribute("btn1", "color", "white")
+Global.UI.setAttribute("btn2", "color", "white")
+Global.UI.setAttribute("btn3", "color", "white")
+Global.UI.setAttribute("btn4", "color", "white")
+Global.UI.setAttribute("btn5", "color", "white")
+	NextRound()
+end
+
+function changeHand(params)
+    changecolor(params[1] or "", params[2], params[3])
+end 
+
+function changecolor(plr, toggleState, btnId)    
+    if Global.UI.getAttribute(btnId, "color") == "white" then
+        Global.UI.setAttribute(btnId, "color", "#aaaaaa77")
+    else
+        Global.UI.setAttribute(btnId, "color", "#000000cc")
+    end
+end
