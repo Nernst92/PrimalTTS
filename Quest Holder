@@ -1,0 +1,157 @@
+QuestBoardGUID = "71f37e"
+PDFBagGUID = "14eb27"
+
+
+PDFList={
+{bookname ="Campaign",page=44,Monster="Toramat",tag = "SunsetPlains"},
+{bookname ="Campaign",page=46,Monster="Ozew",tag = "DragonRidge"},
+{bookname ="Campaign",page=48,Monster="Korowon",tag = "Riverlands"},
+{bookname ="Campaign",page=50,Monster="Felaxir",tag = "CrystalPlateau"},
+{bookname ="Campaign",page=52,Monster="Hurom",tag = "GoldDark"},
+{bookname ="Campaign",page=54,Monster="Felaxir",tag = "CrystalPlateau"},
+{bookname ="Campaign",page=56,Monster="Tarragua",tag = "GoldDark"},
+{bookname ="Campaign",page=58,Monster="Tarragua",tag = "GoldDark"},
+{bookname ="Campaign",page=60,Monster="Orouxen",tag = "Riverlands"},
+{bookname ="Campaign",page=62,Monster="Orouxen",tag = "Riverlands"},
+{bookname ="Campaign",page=64,Monster="Kharja",tag = "Woltyar"},
+{bookname ="Campaign",page=66,Monster="Dygorax",tag = "SunsetPlains"},
+{bookname ="Campaign",page=68,Monster="Ozew",tag = "DragonRidge"},
+{bookname ="Campaign",page=70,Monster="Dygorax",tag = "SunsetPlains"},
+{bookname ="Campaign",page=72,Monster="Felaxir",tag = "CrystalPlateau"},
+{bookname ="Campaign",page=74,Monster="Ozew",tag = "DragonRidge"},
+{bookname ="Campaign",page=76,Monster="Vyraxen",tag = "Woltyar"},
+{bookname ="Campaign",page=78,Monster="Toramat",tag = "SunsetPlains"},
+{bookname ="Campaign",page=80,Monster="Hurom",tag = "GoldDark"},
+{bookname ="Campaign",page=82,Monster="Morkraas",tag = "CrystalPlateau"},
+{bookname ="Campaign",page=84,Monster="Hurom",tag = "GoldDark"},
+{bookname ="Campaign",page=86,Monster="Korowon",tag = "Riverlands"},
+{bookname ="Campaign",page=88,Monster="Orouxen",tag = "Riverlands"},
+{bookname ="Campaign",page=90,Monster="Dygorax",tag = "SunsetPlains"},
+{bookname ="Campaign",page=92,Monster="Kharja",tag = "Woltyar"},
+{bookname ="Campaign",page=94,Monster="Tarragua",tag = "GoldDark"},
+{bookname ="Campaign",page=96,Monster="Vyraxen",tag = "Woltyar"},
+{bookname ="Campaign",page=98,Monster="Morkraas",tag = "CrystalPlateau"},
+{bookname ="Campaign",page=100,Monster="Jekoros",tag = "DragonRidge"},
+{bookname ="Campaign",page=102,Monster="Jekoros",tag = "DragonRidge"},
+{bookname ="Nightmare",page=6,Monster="Zekath",tag = "DragonRidge"},
+{bookname ="Nightmare",page=8,Monster="Zekalith",tag = "DragonRidge"},
+{bookname ="Nightmare",page=10,Monster="Xitheros",tag = "NizMaraga"},
+{bookname ="Nightmare",page=12,Monster="Taraska",tag = "Woltyar"},
+{bookname ="Nightmare",page=14,Monster="Taraska",tag = "Woltyar"},
+{bookname ="Lantern",page=6,Monster="Pazis",tag = "NizMaraga"},
+{bookname ="Lantern",page=8,Monster="Nagarjas",tag = "NizMaraga"},
+{bookname ="Lantern",page=10,Monster="Pazis",tag = "NizMaraga"},
+{bookname ="Lantern",page=12,Monster="Nagarjas",tag = "NizMaraga"},
+{bookname ="Lantern",page=14,Monster="Jekoros",tag = "DragonRidge"},
+{bookname ="Myth",page=6,Monster="Hydar",tag = "EndlessSwamp"},
+{bookname ="Myth",page=8,Monster="Reikal",tag = "EndlessSwamp"},
+{bookname ="Myth",page=14,Monster="Reikal",tag = "EndlessSwamp"},
+{bookname ="Myth",page=16,Monster="Hydar",tag = "EndlessSwamp"},
+{bookname ="Myth",page=18,Monster="Toramat",tag = "SunsetPlains"},
+{bookname ="North",page=6,Monster="Sirkaaj",tag = "Vintrar"},
+{bookname ="North",page=8,Monster="Sirkaaj",tag = "Vintrar"},
+{bookname ="North",page=10,Monster="Mamuraak",tag = "Vintrar"},
+{bookname ="North",page=12,Monster="Mamuraak",tag = "Vintrar"},
+
+}
+
+function deployMonster(monstername, questnumb)
+    Global.call("CleanMonster")
+
+    Global.call("SetupMonster", {monstername, Global.call("getCampaignLevel"),"", questnumb, false})
+end 
+
+function SetPDF(a,index)
+
+    local bookname = PDFList[tonumber(index)].bookname
+    local bookpage = PDFList[tonumber(index)].page
+
+    local currPDF = cleanPDF(bookname) 
+ 
+    if currPDF and currPDF.getName() == bookname then
+        currPDF.book.setPage(tonumber(bookpage)) 
+    else 
+        self.removeAttachment(0)
+        local BookcaseHolder = getObjectFromGUID(PDFBagGUID)
+        BookcaseHolder.takeObject({smooth=false, position = {150,250,200},
+            callback_function = function(bookcase) 
+                bookcase.setLock(true)
+                for _,books in pairs(bookcase.getObjects()) do 
+                    if books.name == bookname then 
+                        bookcase.takeObject({guid=books.guid, smooth=false, rotation = {0,180,0}, position = getSnapPos("PDF"), 
+                        callback_function = function(mypdf)
+        
+                            Wait.time(function() mypdf.book.setPage(bookpage) end, 2) 
+                        end})
+                    end 
+                end 
+
+                bookcase.destruct()
+            end
+        })
+        
+        self.addAttachment(BookcaseHolder)
+    end
+
+    deployMonster(PDFList[tonumber(index)].Monster,index)
+
+end 
+
+function cleanPDF(bookname)
+    pos = getSnapPos("PDF") 
+    mypdf = Global.call("GetObjOnPos", {pos,bookname})
+
+    return mypdf
+end 
+
+function getSnapPos(t)
+
+  for _, s in pairs(Global.getSnapPoints()) do 
+        for _, tag in pairs(s.tags) do 
+            if tag == t then 
+                return s.position
+            end
+        end
+    end 
+
+end 
+
+function getQuestPos(questnum)
+
+    local board = getObjectFromGUID(QuestBoardGUID)
+    local questtag = PDFList[questnum].tag
+    local isfound = false
+    local returnpos 
+
+    for _,tag in pairs( board.getSnapPoints()) do
+        for _, tagn in pairs(tag.tags) do 
+         if tagn == questtag then  
+                isfound = true
+                returnpos = board.positionToWorld(tag.position)
+                break
+            end
+        end
+        if isfound then break end
+    end
+
+    return returnpos
+end 
+
+
+function setQuest(questnumber)
+
+    local pos = getQuestPos(questnumber)
+
+    self.takeObject({position ={200,200,200}, smooth = false, callback_function = function(bag)
+        bag.setLock(true)
+            for _, card in pairs(bag.getObjects()) do 
+                if card.name == tostring(questnumber) then 
+                    bag.takeObject({guid = card.guid, position = pos})
+                    					break
+                end 
+
+            end     
+
+        bag.destruct()
+    end})
+end
