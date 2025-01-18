@@ -1,0 +1,12 @@
+function onLoad()
+
+    self.createButton({
+    click_function = "CleanMonster",
+    function_owner = Global,
+    label = "Clean Up Monster",
+    position = {0, 0.6, 0},
+    width = 2000,
+    height = 600,
+    font_size = 250
+  })
+end
