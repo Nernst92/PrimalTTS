@@ -1,0 +1,3105 @@
+nbr = 3
+
+function setPlayers(nb)
+    nbr = nb
+end
+
+Data  = { 
+	["Monsters"] = {
+		["Vyraxen"] = {
+		  name = "Vyraxen",
+		  element = "Fire",
+		  desc = "A wyvern monster",
+		  track = "",
+		  behavior = "",
+		  attrition = "",
+		  specialCards = "",
+		  playerCards = "",
+		  FightLevel = {
+			["0"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","white"}, {"rightbg","white"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Vyraxen Stance 1. ",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 2, dmg =1, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Vyraxen Stance 2. Vyraxen gains " .. nbr .. " struggle. All players discard the top 3 cards of their deck",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr}},
+				  },
+				  toWound = 3, dmg =1, NextStance = 3},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Vyraxen Stance 3. Place a fire terrain in each threatened sector.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 4, dmg =2, NextStance = 0},
+			  }
+			},
+			["1"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","white"}, {"rightbg","white"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Vyraxen Stance 1. Vyraxen gains " .. nbr-1 .. " struggle.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr-1}},
+				  },
+				  toWound = 5, dmg =1, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Vyraxen Stance 2. Vyraxen gains " .. nbr .. " struggle.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr}},
+				  },
+				  toWound = 7, dmg =1, NextStance = 3},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Vyraxen Stance 3. Place a fire terrain in each threatened sector.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 10, dmg =2, NextStance = 0},
+			  }
+			},
+			["2"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","white"}, {"rightbg","white"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Vyraxen Stance 1. Vyraxen gains " .. nbr-1 .. " struggle.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr-1}},
+				  },
+				  toWound = 10, dmg =2, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Vyraxen Stance 2. Vyraxen gains " .. nbr .. " struggle. All players discard the top 3 cards of their deck.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr}},
+				  },
+				  toWound = 15, dmg =2, NextStance = 4},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Vyraxen Stance 3. Place a fire terrain in each threatened sector. Players in those sectors discard the top 2 cards of their deck.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 20, dmg =3, NextStance = 0},
+			  }
+			},
+			["3"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","white"}, {"rightbg","white"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Vyraxen Stance 1. Place a fire terrain in the front sector. Vyraxen gains " .. nbr .. " struggle.",
+					["Terrain"] = {{"bag_Fire", "front"}},
+					["Actions"] = {{"addStruggle", nbr}},
+				  },
+				  toWound = 18, dmg =3, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Vyraxen Stance 2. Vyraxen gains " .. nbr .. " struggle. All players discard the top 3 cards of their deck.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr}},
+				  },
+				  toWound = 24, dmg =4, NextStance = 4},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Vyraxen Stance 3. Place a fire terrain in each threatened sector. Players in those sectors discard the top 2 cards of their deck.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 30, dmg =5, NextStance = 0},
+			  }
+			},
+		  },
+		  Expedition1Setup = {
+			Terrain = {{"bag_Brush", "left"},{"bag_Rock", "back"},{"bag_Cyricae", "back"},{"bag_Cyricae", "right"},{"bag_Brush", "right"},},
+		  },
+		  Expedition2Setup = {
+			Terrain = {{"bag_Rock", "front"},{"bag_Cyricae", "left"},{"bag_Brush", "left"},{"bag_Water", "back"},{"bag_Plateau", "back"},{"bag_Baethanis", "right"},},
+		  },
+		},
+		["Kharja"] = {
+		  name = "Kharja",
+		  element = "Fire",
+		  desc = "Fire Dog",
+		  track = "",
+		  behavior = "",
+		  attrition = "",
+		  specialCards = "",
+		  playerCards = "",
+		  FightLevel = {
+			["0"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Kharja Stance 1. Each player exhausts a potion card.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 2, dmg =1, NextStance = 6},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Kharja Stance 2. Place a fire terrain in each damaged sector on the board.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 3, dmg =1, NextStance = 2},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Kharja Stance 3. Advance the round marker to 8. If it is already at 8 or beyond, Kharja gains " .. nbr .. " struggle.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 5, dmg =1, NextStance = 0},
+			  }
+			},
+			["1"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Kharja Stance 1. Each player exhausts a potion card.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 5, dmg =1, NextStance = 6},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Kharja Stance 2. Place a fire terrain in each damaged sector on the board.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 7, dmg =1, NextStance = 2},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Kharja Stance 3. Advance the round marker to 8. If it is already at 8 or beyond, Kharja gains " .. nbr .. " struggle.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 12, dmg =1, NextStance = 0},
+			  }
+			},
+			["2"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Kharja Stance 1. Each player exhausts a potion card.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 10, dmg =2, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Kharja Stance 2. Place a counter on Kharja and a fire terrain in each damaged sector on the board.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 16, dmg =2, NextStance = 2},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Kharja Stance 3. Advance the round marker to 8. If it is already at 8 or beyond, Kharja gains " .. nbr .. " struggle.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 20, dmg =3, NextStance = 0},
+			  }
+			},
+			["3"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Kharja Stance 1. Each player exhausts a potion card.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 15, dmg =3, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Kharja Stance 2. Place two counters on Kharja and a fire terrain in each damaged sector on the board. Players in those sectors suffer burning",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 25, dmg =3, NextStance = 2},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Kharja Stance 3. Advance the round marker to 8. If it is already at 8 or beyond, Kharja unleashes.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 30, dmg =5, NextStance = 0},
+			  }
+			},
+		  },
+		  Expedition1Setup = {
+			Terrain = {{"bag_Rock", "back"},{"bag_Rock", "right"},},
+		  },
+		  Expedition2Setup = {
+			Terrain = {{"bag_Rock", "front"},{"bag_Rock", "left"},{"bag_Cyricae", "back"},{"bag_Cyricae", "right"},},
+		  },
+		},
+		["Toramat"] = {
+		  name = "Toramat",
+		  element = "Horn",
+		  desc = "Horny and Hard",
+		  track = "Hardening",
+		  behavior = "Crashing Charge, Out of Control",
+		  attrition = "2",
+		  specialCards = "",
+		  playerCards = "",
+		  FightLevel = {
+			["0"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Toramat Stance 1. ",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 2, dmg =1, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Toramat Stance 2. Toramat gains " .. nbr .. " struggle.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr}},
+				  },
+				  toWound = 3, dmg =1, NextStance = 4},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Toramat Stance 3. Place Out of Control on top of the behavior deck. Remove the plateau terrain from the board. Then place 2 rock terrains in that sector and 1 in each adjacent one.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 3, dmg =2, NextStance = 0},
+			  }
+			},
+			["1"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Toramat Stance 1. Toramat gains " .. nbr-1 .. " struggle.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr-1}},
+				  },
+				  toWound = 4, dmg =1, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Toramat Stance 2. Toramat gains " .. nbr .. " struggle.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr}},
+				  },
+				  toWound = 6, dmg =2, NextStance = 4},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Toramat Stance 3. Place Out of Control on top of the behavior deck. Remove the plateau terrain from the board. Then place 2 rock terrains in that sector and 1 in each adjacent one.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 9, dmg =2, NextStance = 0},
+			  }
+			},
+			["2"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Toramat Stance 1. Toramat gains " .. nbr .. " struggle.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr}},
+				  },
+				  toWound = 10, dmg =2, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Toramat Stance 2. Toramat gains " .. nbr .. " struggle and 1 acceleration (max: " .. nbr .. " acceleration).",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr}, {"addAcceleration", 1}},
+				  },
+				  toWound = 16, dmg =3, NextStance = 4},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Toramat Stance 3. Place Out of Control on top of the behavior deck. Remove the plateau terrain from the board. Players in that sector suffer 2 damage. Then place 2 rock terrains in that sector and 1 in each adjacent one.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 20, dmg =4, NextStance = 0},
+			  }
+			},
+			["3"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Toramat Stance 1. Increast the hardening level by 1. Toramat gains " .. nbr .. " struggle.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr}},
+				  },
+				  toWound = 18, dmg =3, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Toramat Stance 2. Toramat gains " .. nbr .. " struggle and 1 acceleration (max: " .. nbr .. " acceleration).",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr}, {"addAcceleration", 1}},
+				  },
+				  toWound = 25, dmg =4, NextStance = 4},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Toramat Stance 3. Place Out of Control on top of the behavior deck. Remove the plateau terrain from the board. Players in that sector suffer 2 damage. Then place 2 rock terrains in that sector and 1 in each adjacent one.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 30, dmg =6, NextStance = 0},
+			  }
+			},
+		  },
+		  Expedition1Setup = {
+			Terrain = {{"bag_Rock", "front"},{"bag_Sand", "left"},{"bag_Baethanis", "left"},{"bag_Plateau", "back"},{"bag_Rock", "right"},{"bag_Wildmaw", "right"},},
+		  },
+		  Expedition2Setup = {
+			Terrain = {{"bag_Rock", "left"},{"bag_Sand", "left"},{"bag_Wildmaw", "back"},{"bag_Plateau", "back"},{"bag_Sand", "right"},{"bag_Rock", "right"},},
+		  },
+		},
+		["Dygorax"] = {
+		  name = "Dygorax",
+		  element = "Horn",
+		  desc = "Horny Bat",
+		  track = "Hardening",
+		  behavior = "",
+		  attrition = "",
+		  specialCards = "",
+		  playerCards = "",
+		  FightLevel = {
+			["0"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Dygorax Stance 1. Resistant. Place a dust token in the front sector. Dygorax gains " .. nbr-1 .. " struggle.",
+					["Terrain"] = {{"bag_Dust", "front"}},
+					["Actions"] = {{"addStruggle", nbr-1}},
+				  },
+				  toWound = 2, dmg =1, NextStance = 8},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Dygorax Stance 2. Resistant. Place a fire terrain in the front sector.",
+					["Terrain"] = {{"bag_Fire", "front"}},
+					["Actions"] = {},
+				  },
+				  toWound = 3, dmg =1, NextStance = 4},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Dygorax Stance 3. Each player in a sector with a dust token suffers monster damage unless they discard a green card from their hand.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 4, dmg =2, NextStance = 0},
+			  }
+			},
+			["1"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Dygorax Stance 1. Resistant. Place a dust token in the front sector. Dygorax gains " .. nbr-1 .. " struggle.",
+					["Terrain"] = {{"bag_Dust", "front"}},
+					["Actions"] = {{"addStruggle", nbr-1}},
+				  },
+				  toWound = 5, dmg =1, NextStance = 8},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Dygorax Stance 2. Resistant. Place a fire terrain in the front sector.",
+					["Terrain"] = {{"bag_Fire", "front"}},
+					["Actions"] = {},
+				  },
+				  toWound = 7, dmg =2, NextStance = 4},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Dygorax Stance 3. Each player in a sector with a dust token suffers monster damage unless they discard a green card from their hand.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 10, dmg =3, NextStance = 0},
+			  }
+			},
+			["2"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Dygorax Stance 1. Resistant. Place a dust token in the front sector. Dygorax gains " .. nbr-1 .. " struggle.",
+					["Terrain"] = {{"bag_Dust", "front"}},
+					["Actions"] = {{"addStruggle", nbr-1}},
+				  },
+				  toWound = 9, dmg =2, NextStance = 8},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Dygorax Stance 2. Resistant. Place a fire terrain in the front sector.",
+					["Terrain"] = {{"bag_Fire", "front"}},
+					["Actions"] = {},
+				  },
+				  toWound = 14, dmg =3, NextStance = 4},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Dygorax Stance 3. Each player in a sector with a dust token suffers monster damage unless they discard a green card from their hand.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 18, dmg =4, NextStance = 0},
+			  }
+			},
+			["3"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Dygorax Stance 1. Resistant. Place a dust token in the front sector. Dygorax gains " .. nbr-1 .. " struggle.",
+					["Terrain"] = {{"bag_Dust", "front"}},
+					["Actions"] = {{"addStruggle", nbr-1}},
+				  },
+				  toWound = 15, dmg =3, NextStance = 8},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Dygorax Stance 2. Resistant. Place a fire terrain in the front sector. Players in that sector suffer burning.",
+					["Terrain"] = {{"bag_Fire", "front"}},
+					["Actions"] = {},
+				  },
+				  toWound = 20, dmg =5, NextStance = 4},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Dygorax Stance 3. Each player in a sector with a dust token suffers monster damage.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 25, dmg =6, NextStance = 0},
+			  }
+			},
+		  },
+		  Expedition1Setup = {
+			Terrain = {{"bag_Wildmaw", "front"},{"bag_Rock", "left"},{"bag_Sand", "back"},{"bag_Baethanis", "back"},{"bag_Rock", "right"},},
+		  },
+		  Expedition2Setup = {
+			Terrain = {{"bag_Sand", "front"},{"bag_Rock", "left"},{"bag_Wildmaw", "left"},{"bag_Sand", "back"},{"bag_Wildmaw", "right"},{"bag_Rock", "right"},},
+		  },
+		},
+		["Felaxir"] = {
+		  name = "Felaxir",
+		  element = "Crystal",
+		  desc = "Shiny wolf",
+		  track = "",
+		  behavior = "",
+		  attrition = "2",
+		  specialCards = "",
+		  playerCards = "",
+		  FightLevel = {
+			["0"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Felaxir Stance 1. ",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 2, dmg =1, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Felaxir Stance 2. Trigger all behavior cards in play with the rampage reaction.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 3, dmg =1, NextStance = 3},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Felaxir Stance 3. Trigger all behavior cards in play with the rampage reaction.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 4, dmg =2, NextStance = 0},
+			  }
+			},
+			["1"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Felaxir Stance 1. Trigger all behavior cards in play with the rampage reaction.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 6, dmg =1, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Felaxir Stance 2. Trigger all behavior cards in play with the rampage reaction.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 7, dmg =2, NextStance = 3},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Felaxir Stance 3. Trigger all behavior cards in play with the rampage reaction. Felaxir gains " .. nbr-1 .. " struggle.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr-1}},
+				  },
+				  toWound = 9, dmg =2, NextStance = 0},
+			  }
+			},
+			["2"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Felaxir Stance 1. Trigger all behavior cards in play with the rampage reaction.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 12, dmg =2, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Felaxir Stance 2. Trigger all behavior cards in play with the rampage reaction. Felaxir gains 1 struggle for each behavior card triggered this way.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 14, dmg =3, NextStance = 4},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Felaxir Stance 3. Trigger all behavior cards in play with the rampage reaction. Search the attrition deck for base attrition cards with a value of 0 or 1. Remove those cards from the game and then reshuffle the attrition deck.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 20, dmg =3, NextStance = 0},
+			  }
+			},
+			["3"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Felaxir Stance 1. Trigger all behavior cards in play with the rampage reaction.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 18, dmg =3, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Felaxir Stance 2. Trigger all behavior cards in play with the rampage reaction. Felaxir gains 1 struggle for each behavior card triggered this way.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 25, dmg =4, NextStance = 4},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Felaxir Stance 3. Trigger all behavior cards in play with the rampage reaction. Search the attrition deck for base attrition cards with a value of 0 or 1. Remove those cards from the game and then reshuffle the attrition deck.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 28, dmg =5, NextStance = 0},
+			  }
+			},
+		  },
+		  Expedition1Setup = {
+			Terrain = {{"bag_Rock", "front"},{"bag_Cyricae", "left"},{"bag_Baethanis", "back"},{"bag_Rock", "right"},},
+		  },
+		  Expedition2Setup = {
+			Terrain = {{"bag_Rock", "left"},{"bag_Fog", "back"},{"bag_Cyricae", "back"},{"bag_Cyricae", "back"},{"bag_Rock", "right"},},
+		  },
+		},
+		["Morkraas"] = {
+		  name = "Morkraas",
+		  element = "Crystal",
+		  desc = "Legally distinct from Godzilla",
+		  track = "",
+		  behavior = "",
+		  attrition = "",
+		  specialCards = "",
+		  playerCards = "",
+		  FightLevel = {
+			["0"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Morkraas Stance 1. Morkraas gains " .. nbr-1 .. " struggle.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr-1}},
+				  },
+				  toWound = 5, dmg =1, NextStance = 6},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Morkraas Stance 2. Morkraas gains " .. nbr-1 .. " struggle.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr-1}},
+				  },
+				  toWound = 3, dmg =1, NextStance = 3},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Morkraas Stance 3. Each player suffers monster damage unless they discard a blue card from their hand.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 2, dmg =2, NextStance = 0},
+			  }
+			},
+			["1"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Morkraas Stance 1. Morkraas gains " .. nbr-1 .. " struggle.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr-1}},
+				  },
+				  toWound = 10, dmg =1, NextStance = 6},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Morkraas Stance 2. Morkraas gains " .. nbr-1 .. " struggle.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr-1}},
+				  },
+				  toWound = 8, dmg =2, NextStance = 3},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Morkraas Stance 3. Each player suffers monster damage unless they discard a blue card from their hand.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 6, dmg =2, NextStance = 0},
+			  }
+			},
+			["2"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Morkraas Stance 1. Morkraas gains " .. nbr-1 .. " struggle.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr-1}},
+				  },
+				  toWound = 20, dmg =2, NextStance = 6},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Morkraas Stance 2. Morkraas gains " .. nbr-1 .. " struggle.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr-1}},
+				  },
+				  toWound = 16, dmg =3, NextStance = 3},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Morkraas Stance 3. Each player suffers monster damage unless they discard a blue card from their hand.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 14, dmg =3, NextStance = 0},
+			  }
+			},
+			["3"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Morkraas Stance 1. Morkraas gains " .. nbr-1 .. " struggle.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr-1}},
+				  },
+				  toWound = 30, dmg =3, NextStance = 6},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Morkraas Stance 2. Morkraas gains " .. nbr-1 .. " struggle.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr-1}},
+				  },
+				  toWound = 25, dmg =4, NextStance = 3},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Morkraas Stance 3. Each player suffers monster damage unless they discard a blue card from their hand.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 20, dmg =4, NextStance = 0},
+			  }
+			},
+		  },
+		  Expedition1Setup = {
+			Terrain = {{"bag_Rock", "left"},{"bag_Cyricae", "left"},{"bag_Rock", "back"},{"bag_Baethanis", "right"},},
+		  },
+		  Expedition2Setup = {
+			Terrain = {{"bag_Rock", "back"},{"bag_Rock", "right"},},
+		  },
+		},
+		["Orouxen"] = {
+		  name = "Orouxen",
+		  element = "Coral",
+		  desc = "Moist X-Wing",
+		  track = "",
+		  behavior = "",
+		  attrition = "",
+		  specialCards = "",
+		  playerCards = "Debility",
+		  FightLevel = {
+			["0"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Orouxen Stance 1. All players take a debility card from their reserve and add it to their hand.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 2, dmg =1, NextStance = 6},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Orouxen Stance 2. Orouxen gets +1 damage until the end of the round.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 3, dmg =1, NextStance = 3},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Orouxen Stance 3. Players in a sector with water terrain suffer monster damage.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 4, dmg =2, NextStance = 0},
+			  }
+			},
+			["1"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Orouxen Stance 1. All players take a debility card from their reserve and add it to their hand.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 6, dmg =1, NextStance = 6},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Orouxen Stance 2. Orouxen gets +2 damage until the end of the round.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 7, dmg =2, NextStance = 3},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Orouxen Stance 3. Players in a sector with water terrain suffer monster damage.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 8, dmg =3, NextStance = 0},
+			  }
+			},
+			["2"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Orouxen Stance 1. All players take a debility card from their reserve and add it to their hand.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 10, dmg =2, NextStance = 6},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Orouxen Stance 2. Orouxen gets +3 damage until the end of the round.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 15, dmg =3, NextStance = 3},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Orouxen Stance 3. Players in a sector with water terrain suffer monster damage.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 20, dmg =4, NextStance = 0},
+			  }
+			},
+			["3"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Orouxen Stance 1. All players take a debility card from their reserve and add it to their hand.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 20, dmg =3, NextStance = 6},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Orouxen Stance 2. Orouxen gets +4 damage and is unstoppable until the end of the round.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 22, dmg =4, NextStance = 3},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Orouxen Stance 3. Players in a sector with water terrain suffer monster damage.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 26, dmg =6, NextStance = 0},
+			  }
+			},
+		  },
+		  Expedition1Setup = {
+			Terrain = {{"bag_Plateau", "front"},{"bag_Rock", "left"},{"bag_Synaerea", "left"},{"bag_Water", "back"},{"bag_Baethanis", "back"},{"bag_Water", "right"},{"bag_Baethanis", "right"},},
+		  },
+		  Expedition2Setup = {
+			Terrain = {{"bag_Sand", "front"},{"bag_Rock", "front"},{"bag_Water", "left"},{"bag_Baethanis", "left"},{"bag_Fog", "back"},{"bag_Plateau", "back"},{"bag_Water", "right"},{"bag_Synaerea", "right"},},
+		  },
+		},
+		["Korowon"] = {
+		  name = "Korowon",
+		  element = "Coral",
+		  desc = "Angry hermit crab",
+		  track = "",
+		  behavior = "",
+		  attrition = "",
+		  specialCards = "",
+		  playerCards = "",
+		  FightLevel = {
+			["0"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Korowon Stance 1. Advance the round marker by 1 unless all players reveal a blue card from their hand.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 2, dmg =1, NextStance = 6},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Korowon Stance 2. While this stance is activated you cannot convert damage into wounds.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 0, dmg =1, NextStance = 0},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Korowon Stance 3. Place a water terrain in each sector (max: 1 per sector).",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 4, dmg =1, NextStance = 0},
+			  }
+			},
+			["1"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Korowon Stance 1. Advance the round marker by 1 unless all players reveal a blue card from their hand.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 6, dmg =1, NextStance = 6},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Korowon Stance 2. While this stance is activated you cannot convert damage into wounds.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 0, dmg =1, NextStance = 0},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Korowon Stance 3. Place a water terrain in each sector (max: 1 per sector).",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 8, dmg =1, NextStance = 0},
+			  }
+			},
+			["2"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Korowon Stance 1. Advance the round marker by 1 unless all players reveal a blue card from their hand.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 13, dmg =2, NextStance = 6},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Korowon Stance 2. While this stance is activated you cannot convert damage into wounds.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 0, dmg =2, NextStance = 0},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Korowon Stance 3. Place a water terrain in each sector (max: 1 per sector).",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 16, dmg =2, NextStance = 0},
+			  }
+			},
+			["3"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Korowon Stance 1. Advance the round marker by 1 unless all players reveal a blue card from their hand.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 20, dmg =3, NextStance = 6},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Korowon Stance 2. While this stance is activated you cannot convert damage into wounds.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 0, dmg =3, NextStance = 0},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Korowon Stance 3. Place a water terrain in each sector (max: 1 per sector).",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 25, dmg =3, NextStance = 0},
+			  }
+			},
+		  },
+		  Expedition1Setup = {
+			Terrain = {{"bag_Water", "front"},{"bag_Synaerea", "front"},{"bag_Rock", "left"},{"bag_Brush", "left"},{"bag_Plateau", "back"},{"bag_Water", "back"},{"bag_Rock", "right"},{"bag_Baethanis", "right"},},
+		  },
+		  Expedition2Setup = {
+			Terrain = {{"bag_Sand", "front"},{"bag_Plateau", "front"},{"bag_Water", "left"},{"bag_Rock", "left"},{"bag_Water", "back"},{"bag_Baethanis", "back"},{"bag_Sand", "right"},{"bag_Synaerea", "right"},},
+		  },
+		},
+		["Ozew"] = {
+		  name = "Ozew",
+		  element = "Thunder",
+		  desc = "Bug zapper gets revenge",
+		  track = "",
+		  behavior = "Lightning",
+		  attrition = "",
+		  specialCards = "Rumble, Swarm (Level 2/3)",
+		  playerCards = "",
+		  FightLevel = {
+			["0"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Ozew Stance 1. ",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 3, dmg =1, NextStance = 8},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Ozew Stance 2. All players become dazed. Then place Lightning on top of the behavior deck.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 2, dmg =1, NextStance = 3},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Ozew Stance 3. Ozew gains " .. nbr-1 .. " struggle. Then remove the Hit the Horn objective from the game.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr-1}},
+				  },
+				  toWound = 2, dmg =1, NextStance = 0},
+			  }
+			},
+			["1"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Ozew Stance 1. ",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 7, dmg =1, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Ozew Stance 2. All players become dazed. Then place Lightning on top of the behavior deck.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 5, dmg =1, NextStance = 3},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Ozew Stance 3. Ozew gains " .. nbr-1 .. " struggle. Then remove the Hit the Horn objective from the game.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr-1}},
+				  },
+				  toWound = 3, dmg =1, NextStance = 0},
+			  }
+			},
+			["2"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Ozew Stance 1. Resistant.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 16, dmg =2, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Ozew Stance 2. Resistant. All players become dazed. Then place Lightning on top of the behavior deck.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 12, dmg =2, NextStance = 3},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Ozew Stance 3. Reveal the top 3 cards of the swarm deck and bring them into play. Then remove the Hit the Horn objective from the game.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 9, dmg =2, NextStance = 0},
+			  }
+			},
+			["3"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Ozew Stance 1. Resistant.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 25, dmg =3, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Ozew Stance 2. Resistant. All players become dazed. Then place Lightning on top of the behavior deck.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 18, dmg =3, NextStance = 3},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Ozew Stance 3. Reveal the top 3 cards of the swarm deck and bring them into play. Then remove the Hit the Horn objective from the game.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 15, dmg =3, NextStance = 0},
+			  }
+			},
+		  },
+		  Expedition1Setup = {
+			Terrain = {{"bag_Baethanis", "front"},{"bag_Baethanis", "left"},{"bag_Rock", "back"},{"bag_Rock", "right"},},
+		  },
+		  Expedition2Setup = {
+			Terrain = {{"bag_Cyricae", "front"},{"bag_Fog", "left"},{"bag_Baethanis", "left"},{"bag_Rock", "back"},{"bag_Rock", "right"},},
+		  },
+		},
+		["Jekoros"] = {
+		  name = "Jekoros",
+		  element = "Thunder",
+		  desc = "Pikachu's final form",
+		  track = "Charge",
+		  behavior = "",
+		  attrition = "5",
+		  specialCards = "",
+		  playerCards = "",
+		  FightLevel = {
+			["0"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Jekoros Stance 1. When the charge level reaches 3, reset it to 0 and advance to Stance 2.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 2, dmg =1, NextStance = 0},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Jekoros Stance 2. When the charge level reaches 3, reset it to 0 and advance to Stance 3.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 4, dmg =1, NextStance = 0},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Jekoros Stance 3. When the charge level reaches 3, all players are KO'd.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 5, dmg =1, NextStance = 0},
+			  }
+			},
+			["1"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Jekoros Stance 1. When the charge level reaches 3, reset it to 0 and advance to Stance 2.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 7, dmg =1, NextStance = 0},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Jekoros Stance 2. When the charge level reaches 3, reset it to 0 and advance to Stance 3.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 8, dmg =1, NextStance = 0},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Jekoros Stance 3. When the charge level reaches 3, all players are KO'd.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 12, dmg =1, NextStance = 0},
+			  }
+			},
+			["2"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Jekoros Stance 1. Increase the charge level by 1. When the charge level reaches 3, reset it to 0 and advance to Stance 2.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 12, dmg =2, NextStance = 0},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Jekoros Stance 2. When the charge level reaches 3, reset it to 0 and advance to Stance 3.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 17, dmg =2, NextStance = 0},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Jekoros Stance 3. When the charge level reaches 3, all players are KO'd.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 22, dmg =2, NextStance = 0},
+			  }
+			},
+			["3"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Jekoros Stance 1. Increase the charge level by 1. When the charge level reaches 3, reset it to 0 and advance to Stance 2.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 20, dmg =3, NextStance = 0},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Jekoros Stance 2. When the charge level reaches 3, reset it to 0 and advance to Stance 3.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 25, dmg =3, NextStance = 0},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Jekoros Stance 3. When the charge level reaches 3, all players are KO'd.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 30, dmg =3, NextStance = 0},
+			  }
+			},
+		  },
+		  Expedition1Setup = {
+			Terrain = {{"bag_Rock", "left"},{"bag_Water", "left"},{"bag_Rock", "back"},{"bag_Rock", "right"},{"bag_Water", "right"},},
+		  },
+		  Expedition2Setup = {
+			Terrain = {{"bag_Rock", "front"},{"bag_Rock", "left"},{"bag_Water", "left"},{"bag_Cyricae", "back"},{"bag_Water", "right"},{"bag_Cyricae", "right"},},
+		  },
+		},
+		["Hurom"] = {
+		  name = "Hurom",
+		  element = "Metal",
+		  desc = "Metalic ferret",
+		  track = "",
+		  behavior = "",
+		  attrition = "2",
+		  specialCards = "",
+		  playerCards = "",
+		  FightLevel = {
+			["0"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Hurom Stance 1. Resistant. Place an Arkeum token in the front sector.",
+					["Terrain"] = {{"bag_Arkeum", "front"}},
+					["Actions"] = {},
+				  },
+				  toWound = 2, dmg =1, NextStance = 6},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Hurom Stance 2. Resistant. Shield 1. Shuffle 1 of Hurom's special attrition cards into the attrition deck.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 2, dmg =1, NextStance = 3},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Hurom Stance 3. Shield 1. Remove all rock terrains from the board.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 3, dmg =2, NextStance = 0},
+			  }
+			},
+			["1"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Hurom Stance 1. Resistant. Place an Arkeum token in the front sector.",
+					["Terrain"] = {{"bag_Arkeum", "front"}},
+					["Actions"] = {},
+				  },
+				  toWound = 4, dmg =1, NextStance = 6},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Hurom Stance 2. Resistant. Shield 1. Shuffle 1 of Hurom's special attrition cards into the attrition deck.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 6, dmg =1, NextStance = 3},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Hurom Stance 3. Shield 2. Remove all rock terrains from the board.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 7, dmg =2, NextStance = 0},
+			  }
+			},
+			["2"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Hurom Stance 1. Resistant. Shield 2. Hurom gains " .. nbr-1 .. " struggle. Place an Arkeum token in the front and rear sectors.",
+					["Terrain"] = {{"bag_Arkeum", "front"}, {"bag_Arkeum", "back"}},
+					["Actions"] = {{"addStruggle", nbr}},
+				  },
+				  toWound = 9, dmg =2, NextStance = 6},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Hurom Stance 2. Resistant. Shield 2. Shuffle 2 of Hurom's special attrition cards into the attrition deck.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 14, dmg =3, NextStance = 3},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Hurom Stance 3. Shield 3. Remove all rock terrains from the board.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 17, dmg =4, NextStance = 0},
+			  }
+			},
+			["3"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Hurom Stance 1. Resistant. Shield 3. Hurom gains " .. nbr .. " struggle and 1 acceleration. Place an Arkeum token in the front and rear sectors.",
+					["Terrain"] = {{"bag_Arkeum", "front"}, {"bag_Arkeum", "back"}},
+					["Actions"] = {{"addStruggle", nbr}, {"addAcceleration", 1}},
+				  },
+				  toWound = 15, dmg =4, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Hurom Stance 2. Resistant. Shield 3. Shuffle 2 of Hurom's special attrition cards into the attrition deck.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 20, dmg =4, NextStance = 3},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Hurom Stance 3. Shield 4. Remove all rock terrains from the board. Players in a sector with an Arkeum token suffer monster damage+1.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 25, dmg =45, NextStance = 0},
+			  }
+			},
+		  },
+		  Expedition1Setup = {
+			Terrain = {{"bag_Baethanis", "front"},{"bag_Brush", "left"},{"bag_Rock", "left"},{"bag_Rock", "back"},{"bag_Rock", "right"},},
+		  },
+		  Expedition2Setup = {
+			Terrain = {{"bag_Rock", "left"},{"bag_Rock", "back"},{"bag_Rock", "right"},},
+		  },
+		},
+		["Tarragua"] = {
+		  name = "Tarragua",
+		  element = "Metal",
+		  desc = "Even more spikes",
+		  track = "",
+		  behavior = "",
+		  attrition = "",
+		  specialCards = "",
+		  playerCards = "",
+		  FightLevel = {
+			["0"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Tarragua Stance 1. Resistant. Shield 1.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 2, dmg =1, NextStance = 6},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Tarragua Stance 2. Resistant. Shield 1. Tarragua gains 1 acceleration.",
+					["Terrain"] = {},
+					["Actions"] = {{"addAcceleration", 1}},
+				  },
+				  toWound = 3, dmg =1, NextStance = 3},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Tarragua Stance 3. Shield 2.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 4, dmg =2, NextStance = 0},
+			  }
+			},
+			["1"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Tarragua Stance 1. Resistant. Shield 1.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 6, dmg =1, NextStance = 6},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Tarragua Stance 2. Resistant. Shield 1. Tarragua gains 1 acceleration.",
+					["Terrain"] = {},
+					["Actions"] = {{"addAcceleration", 1}},
+				  },
+				  toWound = 7, dmg =1, NextStance = 3},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Tarragua Stance 3. Shield 2.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 8, dmg =2, NextStance = 0},
+			  }
+			},
+			["2"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Tarragua Stance 1. Resistant. Shield 2.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 10, dmg =2, NextStance = 6},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Tarragua Stance 2. Resistant. Shield 2. Tarragua gains 1 acceleration.",
+					["Terrain"] = {},
+					["Actions"] = {{"addAcceleration", 1}},
+				  },
+				  toWound = 14, dmg =3, NextStance = 3},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Tarragua Stance 3. Shield 3.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 18, dmg =4, NextStance = 0},
+			  }
+			},
+			["3"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Tarragua Stance 1. Resistant. Shield 3. Search the attrition deck for a card with attrition value of 0 and remove that card from the game. Then shuffle the attrition deck.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 16, dmg =3, NextStance = 6},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Tarragua Stance 2. Resistant. Shield 3. Tarragua gains 1 acceleration.",
+					["Terrain"] = {},
+					["Actions"] = {{"addAcceleration", 1}},
+				  },
+				  toWound = 18, dmg =4, NextStance = 3},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Tarragua Stance 3. Shield 4. Tarragua gains 1 acceleration.",
+					["Terrain"] = {},
+					["Actions"] = {{"addAcceleration", 1}},
+				  },
+				  toWound = 22, dmg =5, NextStance = 0},
+			  }
+			},
+		  },
+		  Expedition1Setup = {
+			Terrain = {{"bag_Rock", "front"},{"bag_Rock", "left"},{"bag_Plateau", "back"},{"bag_Baethanis", "right"},},
+		  },
+		  Expedition2Setup = {
+			Terrain = {{"bag_Plateau", "left"},{"bag_Fog", "left"},{"bag_Rock", "back"},{"bag_Rock", "right"},{"bag_Fog", "right"},},
+		  },
+		},
+		["Pazis"] = {
+		  name = "Pazis",
+		  element = "Feather",
+		  desc = "Cocky Peacock",
+		  track = "",
+		  behavior = "Aeriel Evasion",
+		  attrition = "",
+		  specialCards = "",
+		  playerCards = "Paralyzing Spores",
+		  FightLevel = {
+			["0"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Pazis Stance 1. Each player suffers monster damage unless they reveal a yellow card from their hand.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 2, dmg =1, NextStance = 8},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Pazis Stance 2. Shuffle Aerial Evasion into the behavior deck.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 2, dmg =1, NextStance = 5},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Pazis Stance 3. Each player suffers monster damage unless they reveal a yellow card from their hand.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 3, dmg =2, NextStance = 0},
+			  }
+			},
+			["1"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Pazis Stance 1. Each player suffers monster damage unless they reveal a yellow card from their hand.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 4, dmg =1, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Pazis Stance 2. Shuffle Aerial Evasion into the behavior deck.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 5, dmg =1, NextStance = 4},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Pazis Stance 3. Each player suffers monster damage unless they reveal a yellow card from their hand.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 7, dmg =2, NextStance = 0},
+			  }
+			},
+			["2"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Pazis Stance 1. Each player suffers monster damage unless they reveal a yellow card from their hand.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 10, dmg =2, NextStance = 8},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Pazis Stance 2. Shuffle Aerial Evasion into the behavior deck.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 13, dmg =3, NextStance = 5},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Pazis Stance 3. Each player suffers monster damage unless they reveal two yellow cards from their hand.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 17, dmg =4, NextStance = 0},
+			  }
+			},
+			["3"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Pazis Stance 1. Each player suffers monster damage unless they reveal a yellow card from their hand.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 18, dmg =4, NextStance = 8},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Pazis Stance 2. Shuffle Aerial Evasion into the behavior deck. Pazis gains " .. nbr .. " struggle.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr}},
+				  },
+				  toWound = 20, dmg =4, NextStance = 5},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Pazis Stance 3. Each player suffers monster damage unless they reveal three cards of the same color from their hand.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 25, dmg =5, NextStance = 0},
+			  }
+			},
+		  },
+		  Expedition1Setup = {
+			Terrain = {{"bag_Synaerea", "front"},{"bag_Brush", "left"},{"bag_Baethanis", "back"},{"bag_JungleBrush", "right"},},
+		  },
+		  Expedition2Setup = {
+			Terrain = {{"bag_Synaerea", "front"},{"bag_Brush", "left"},{"bag_Wildmaw", "left"},{"bag_Synaerea", "back"},{"bag_Wildmaw", "right"},{"bag_JungleBrush", "right"},},
+		  },
+		},
+		["Nagarjas"] = {
+		  name = "Nagarjas",
+		  element = "Feather",
+		  desc = "Falcor",
+		  track = "",
+		  behavior = "",
+		  attrition = "",
+		  specialCards = "",
+		  playerCards = "",
+		  FightLevel = {
+			["0"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Nagarjas Stance 1.  It advanced the round marker by 1.",
+					["Terrain"] = {},
+					["Actions"] = {{"NextRound"},},
+				  },
+				  toWound = 4, dmg =1, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Nagarjas Stance 2.  It advanced the round marker by 1.",
+					["Terrain"] = {},
+					["Actions"] = {{"NextRound"},},
+				  },
+				  toWound = 4, dmg =1, NextStance = 4},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Nagarjas Stance 3.  It advanced the round marker by 1.",
+					["Terrain"] = {},
+					["Actions"] = {{"NextRound"},},
+				  },
+				  toWound = 5, dmg =2, NextStance = 0},
+			  }
+			},
+			["1"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Nagarjas Stance 1.  It advanced the round marker by 1.",
+					["Terrain"] = {},
+					["Actions"] = {{"NextRound"},},
+				  },
+				  toWound = 5, dmg =1, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Nagarjas Stance 2.  It advanced the round marker by 1.",
+					["Terrain"] = {},
+					["Actions"] = {{"NextRound"},},
+				  },
+				  toWound = 6, dmg =2, NextStance = 4},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Nagarjas Stance 3.  It advanced the round marker by 1.",
+					["Terrain"] = {},
+					["Actions"] = {{"NextRound"},},
+				  },
+				  toWound = 7, dmg =2, NextStance = 0},
+			  }
+			},
+			["2"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Nagarjas Stance 1.  It advanced the round marker by 1.",
+					["Terrain"] = {},
+					["Actions"] = {{"NextRound"},},
+				  },
+				  toWound = 11, dmg =3, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Nagarjas Stance 2.  It advanced the round marker by 1.",
+					["Terrain"] = {},
+					["Actions"] = {{"NextRound"},},
+				  },
+				  toWound = 15, dmg =3, NextStance = 4},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Nagarjas Stance 3.  It advanced the round marker by 1.",
+					["Terrain"] = {},
+					["Actions"] = {{"NextRound"},},
+				  },
+				  toWound = 16, dmg =4, NextStance = 0},
+			  }
+			},
+			["3"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Nagarjas Stance 1.  It advanced the round marker by 1.",
+					["Terrain"] = {},
+					["Actions"] = {{"NextRound"},},
+				  },
+				  toWound = 18, dmg =4, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Nagarjas Stance 2. It advanced the round marker by 1.",
+					["Terrain"] = {},
+					["Actions"] = {{"NextRound"},},
+				  },
+				  toWound = 22, dmg =4, NextStance = 4},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Nagarjas Stance 3. It advanced the round marker by 1.",
+					["Terrain"] = {},
+					["Actions"] = {{"NextRound"},},
+				  },
+				  toWound = 28, dmg =5, NextStance = 0},
+			  }
+			},
+		  },
+		  Expedition1Setup = {
+			Terrain = {{"bag_Brush", "front"},{"bag_Synaerea", "left"},{"bag_Baethanis", "back"},{"bag_JungleBrush", "right"},},
+		  },
+		  Expedition2Setup = {
+			Terrain = {{"bag_Brush", "front"},{"bag_Wildmaw", "front"},{"bag_Water", "left"},{"bag_Synaerea", "left"},{"bag_Synaerea", "back"},{"bag_Wildmaw", "back"},{"bag_Water", "left"},{"bag_JungleBrush", "left"},},
+		  },
+		},
+		["Mamuraak"] = {
+		  name = "Mamuraak",
+		  element = "Ice",
+		  desc = "Lizard Mammoth",
+		  track = "Glaciation",
+		  behavior = "Winter's Embrace",
+		  attrition = "",
+		  specialCards = "",
+		  playerCards = "",
+		  FightLevel = {
+			["0"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Mamuraak Stance 1. Increase the glaciation level by 1.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 3, dmg =1, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Mamuraak Stance 2. Increase the glaciation level by 1.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 4, dmg =1, NextStance = 4},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Mamuraak Stance 3. Increase the glaciation level by 1 and place Winter's Embrace on top of the behavior deck.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 5, dmg =2, NextStance = 0},
+			  }
+			},
+			["1"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Mamuraak Stance 1. Increase the glaciation level by 1.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 6, dmg =1, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Mamuraak Stance 2. Increase the glaciation level by 1.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 8, dmg =1, NextStance = 4},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Mamuraak Stance 3. Increase the glaciation level by 1 and place Winter's Embrace on top of the behavior deck.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 10, dmg =2, NextStance = 0},
+			  }
+			},
+			["2"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Mamuraak Stance 1. Increase the glaciation level by 1.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 12, dmg =2, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Mamuraak Stance 2. Increase the glaciation level by 1.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 18, dmg =2, NextStance = 4},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Mamuraak Stance 3. Increase the glaciation level by 1 and place Winter's Embrace on top of the behavior deck.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 20, dmg =3, NextStance = 0},
+			  }
+			},
+			["3"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Mamuraak Stance 1. Increase the glaciation level by 1.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 20, dmg =3, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Mamuraak Stance 2. Increase the glaciation level by 1. Mamuraak gains " .. nbr .. " struggle.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr}},
+				  },
+				  toWound = 25, dmg =3, NextStance = 4},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Mamuraak Stance 3. Increase the glaciation level by 1 and place Winter's Embrace on top of the behavior deck.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 30, dmg =4, NextStance = 0},
+			  }
+			},
+		  },
+		  Expedition1Setup = {
+			Terrain = {{"bag_Ice", "front"},{"bag_Ice", "left"},{"bag_Rock", "left"},{"bag_Ice", "back"},{"bag_Ice", "right"},{"bag_Rock", "right"},},
+		  },
+		  Expedition2Setup = {
+			Terrain = {{"bag_Ice", "front"},{"bag_Ice", "back"},{"bag_Ice", "left"},{"bag_Ice", "right"},},
+		  },
+		},
+		["Sirkaaj"] = {
+		  name = "Sirkaaj",
+		  element = "Ice",
+		  desc = "Snow rat",
+		  track = "",
+		  behavior = "",
+		  attrition = "",
+		  specialCards = "",
+		  playerCards = "",
+		  FightLevel = {
+			["0"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Sirkaaj Stance 1. Sirkaaj gains " .. nbr-1 .. " struggle.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr-1}},
+				  },
+				  toWound = 2, dmg =1, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Sirkaaj Stance 2. Sirkaaj gains struggle equal to the total number of exiled cards.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 3, dmg =1, NextStance = 2},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Sirkaaj Stance 3. Sirkaaj gains struggle equal to the total number of exiled cards.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 3, dmg =1, NextStance = 0},
+			  }
+			},
+			["1"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Sirkaaj Stance 1. Sirkaaj gains " .. nbr-1 .. " struggle.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr-1}},
+				  },
+				  toWound = 5, dmg =1, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Sirkaaj Stance 2. Sirkaaj gains struggle equal to the total number of exiled cards.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 6, dmg =1, NextStance = 2},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Sirkaaj Stance 3. Sirkaaj gains struggle equal to the total number of exiled cards.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 9, dmg =2, NextStance = 0},
+			  }
+			},
+			["2"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Sirkaaj Stance 1. Sirkaaj gains " .. nbr .. " struggle.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr}},
+				  },
+				  toWound = 13, dmg =2, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Sirkaaj Stance 2. Sirkaaj gains struggle equal to the total number of exiled cards.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 16, dmg =2, NextStance = 3},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Sirkaaj Stance 3. Sirkaaj gains struggle equal to the total number of exiled cards.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 20, dmg =3, NextStance = 0},
+			  }
+			},
+			["3"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Sirkaaj Stance 1. Sirkaaj gains " .. nbr .. " struggle.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr}},
+				  },
+				  toWound = 22, dmg =3, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Sirkaaj Stance 2. Sirkaaj gains struggle equal to the total number of exiled cards.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 25, dmg =3, NextStance = 3},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Sirkaaj Stance 3. Sirkaaj gains struggle equal to the total number of exiled cards.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 28, dmg =4, NextStance = 0},
+			  }
+			},
+		  },
+		  Expedition1Setup = {
+			Terrain = {{"bag_Ice", "front"},{"bag_Ice", "left"},{"bag_Ice", "back"},{"bag_Baethanis", "back"},{"bag_Ice", "right"},},
+		  },
+		  Expedition2Setup = {
+			Terrain = {{"bag_Ice", "front"},{"bag_Ice", "left"},{"bag_Rock", "left"},{"bag_Rock", "back"},{"bag_Ice", "back"},{"bag_Ice", "right"},},
+		  },
+		},
+		["Reikal"] = {
+		  name = "Reikal",
+		  element = "Venom",
+		  desc = "Poison snake",
+		  track = "",
+		  behavior = "",
+		  attrition = "",
+		  specialCards = "Venemous Serpent",
+		  playerCards = "Venom",
+		  FightLevel = {
+			["0"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Reikal Stance 1. ",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 2, dmg =1, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Reikal Stance 2. Each player becomes engaged with a Venemous Serpent.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 3, dmg =1, NextStance = 3},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Reikal Stance 3. All players must search their discard pile for a Venom card and place it on top of their deck.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 5, dmg =1, NextStance = 0},
+			  }
+			},
+			["1"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Reikal Stance 1. Reikal gains " .. nbr-1 .. " struggle.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr-1}},
+				  },
+				  toWound = 6, dmg =1, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Reikal Stance 2. Each player becomes engaged with a Venemous Serpent.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 8, dmg =1, NextStance = 3},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Reikal Stance 3. All players must search their discard pile for a Venom card and place it on top of their deck.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 10, dmg =1, NextStance = 0},
+			  }
+			},
+			["2"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Reikal Stance 1. Reikal gains " .. nbr .. " struggle.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr}},
+				  },
+				  toWound = 12, dmg =2, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Reikal Stance 2. Reikal gains " .. nbr .. " struggle. Then each player becomes engaged with a Venemous Serpent.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr}},
+				  },
+				  toWound = 16, dmg =2, NextStance = 3},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Reikal Stance 3. All players must search their discard pile for a Venom card and place it on top of their deck.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 20, dmg =2, NextStance = 0},
+			  }
+			},
+			["3"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Reikal Stance 1. Reikal gains " .. nbr .. " struggle.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr}},
+				  },
+				  toWound = 18, dmg =3, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Reikal Stance 2. Reikal gains " .. nbr .. " struggle. Then each player becomes engaged with a Venemous Serpent.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr}},
+				  },
+				  toWound = 22, dmg =3, NextStance = 3},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Reikal Stance 3. All players must search their discard pile for a Venom card and place it on top of their deck.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 30, dmg =4, NextStance = 0},
+			  }
+			},
+		  },
+		  Expedition1Setup = {
+			Terrain = {{"bag_Swamp", "front"},{"bag_Fog", "left"},{"bag_Cyricae", "left"},{"bag_Swamp", "back"},{"bag_Cyricae", "right"},{"bag_Fog", "right"},},
+		  },
+		  Expedition2Setup = {
+			Terrain = {{"bag_Fog", "front"},{"bag_Rock", "front"},{"bag_Synaerea", "left"},{"bag_Swamp", "left"},{"bag_Fog", "back"},{"bag_Rock", "back"},{"bag_Swamp", "right"},{"bag_Synaerea", "right"},},
+		  },
+		},
+		["Hydar"] = {
+		  name = "Hydar",
+		  element = "Venom",
+		  desc = "Garden uproots you",
+		  track = "",
+		  behavior = "",
+		  attrition = "",
+		  specialCards = "",
+		  playerCards = "Venom",
+		  FightLevel = {
+			["0"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Hydar Stance 1. Each player takes a Venom card from their reserve and places it on top of their discard pile.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 2, dmg =1, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Hydar Stance 2. Each player takes a Venom card from their reserve and places it on top of their discard pile.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 3, dmg =1, NextStance = 4},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Hydar Stance 3. Each player takes a Venom card from their reserve and places it on top of their discard pile.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 3, dmg =1, NextStance = 0},
+			  }
+			},
+			["1"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Hydar Stance 1. Each player takes a Venom card from their reserve and places it on top of their discard pile.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 4, dmg =1, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Hydar Stance 2. Each player takes a Venom card from their reserve and places it on top of their discard pile.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 6, dmg =1, NextStance = 4},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Hydar Stance 3. Each player takes a Venom card from their reserve and places it on top of their discard pile.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 8, dmg =2, NextStance = 0},
+			  }
+			},
+			["2"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Hydar Stance 1. Each player takes a Venom card from their reserve and places it on top of their discard pile.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 12, dmg =2, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Hydar Stance 2. Each player takes a Venom card from their reserve and places it on top of their discard pile.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 15, dmg =3, NextStance = 4},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Hydar Stance 3. Each player takes a Venom card from their reserve and places it on top of their discard pile.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 18, dmg =4, NextStance = 0},
+			  }
+			},
+			["3"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Hydar Stance 1. Each player takes a Venom card from their reserve and places it on top of their discard pile.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 18, dmg =4, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Hydar Stance 2. Each player takes a Venom card from their reserve and places it on top of their discard pile.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 22, dmg =4, NextStance = 4},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Hydar Stance 3. Each player takes a Venom card from their reserve and places it on top of their discard pile.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 28, dmg =5, NextStance = 0},
+			  }
+			},
+		  },
+		  Expedition1Setup = {
+			Terrain = {{"bag_Brush", "front"},{"bag_Wildmaw", "left"},{"bag_Baethanis", "left"},{"bag_Baethanis", "back"},{"bag_Wildmaw", "back"},{"bag_Synaerea", "right"},{"bag_Brush", "right"},},
+		  },
+		  Expedition2Setup = {
+			Terrain = {{"bag_Brush", "front"},{"bag_Synaerea", "front"},{"bag_Swamp", "left"},{"bag_Baethanis", "left"},{"bag_Baethanis", "back"},{"bag_Swamp", "back"},{"bag_Wildmaw", "right"},{"bag_Brush", "right"},},
+		  },
+		},
+		["Zekalith"] = {
+		  name = "Zekalith",
+		  element = "Thunder",
+		  desc = "Probably a Xenomorph",
+		  track = "Vibration",
+		  behavior = "",
+		  attrition = "",
+		  specialCards = "",
+		  playerCards = "",
+		  FightLevel = {
+			["0"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Zekalith Stance 1. Place a counter on Electric Surge. Reveal a special peril card at random and bring it into play.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 2, dmg =1, NextStance = 6},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Zekalith Stance 2. If the vibration level is 2 or higher, all players suffer 1 damage.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 3, dmg =1, NextStance = 2},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Zekalith Stance 3. If the vibration level is 2 or higher, all players suffer 1 damage.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 3, dmg =1, NextStance = 0},
+			  }
+			},
+			["1"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Zekalith Stance 1. Place a counter on Electric Surge. Reveal a special peril card at random and bring it into play.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 4, dmg =1, NextStance = 6},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Zekalith Stance 2. Zekalith gains " .. nbr-1 .. " struggle. If the vibration level is 2 or higher, all players suffer 1 damage.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr-1}},
+				  },
+				  toWound = 7, dmg =1, NextStance = 2},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Zekalith Stance 3. If the vibration level is 2 or higher, all players suffer 1 damage.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 8, dmg =2, NextStance = 0},
+			  }
+			},
+			["2"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Zekalith Stance 1. Place a counter on Electric Surge. Reveal a special peril card at random and bring it into play.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 10, dmg =2, NextStance = 6},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Zekalith Stance 2. Zekalith gains " .. nbr .. " struggle. If the vibration level is 2 or higher, all players suffer 2 damage.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr}},
+				  },
+				  toWound = 16, dmg =2, NextStance = 2},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Zekalith Stance 3. If the vibration level is 2 or higher, all players suffer 2 damage.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 18, dmg =3, NextStance = 0},
+			  }
+			},
+			["3"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Zekalith Stance 1. Place a counter on Electric Surge. Reveal a special peril card at random and bring it into play.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 15, dmg =3, NextStance = 6},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Zekalith Stance 2. Zekalith gains " .. nbr .. " struggle. If the vibration level is 2 or higher, all players suffer 3 damage.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr}},
+				  },
+				  toWound = 24, dmg =3, NextStance = 2},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Zekalith Stance 3. If the vibration level is 2 or higher, all players suffer 3 damage.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 28, dmg =4, NextStance = 0},
+			  }
+			},
+		  },
+		  Expedition1Setup = {
+			Terrain = {{"bag_Water", "front"},{"bag_Cyricae", "front"},{"bag_Water", "left"},{"bag_Baethanis", "left"},{"bag_Rock", "back"},{"bag_Rock", "right"},},
+		  },
+		  Expedition2Setup = {
+			Terrain = {{"bag_Water", "front"},{"bag_Cyricae", "front"},{"bag_Water", "left"},{"bag_Cyricae", "left"},{"bag_Rock", "back"},{"bag_Rock", "right"},},
+		  },
+		},
+		["Xitheros"] = {
+		  name = "Xitheros",
+		  element = "Feather",
+		  desc = "We made a T Rex",
+		  track = "",
+		  behavior = "",
+		  attrition = "",
+		  specialCards = "",
+		  playerCards = "Bleeding",
+		  FightLevel = {
+			["0"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Xitheros Stance 1. Xitheros cannot be taunted or confused. All players draw 1. Then Xitheros gains 1 struggle for each Attack card (red) across all players' hands.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 3, dmg =1, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Xitheros Stance 2. Xitheros cannot be taunted or confused. Xitheros gains 1 struggle for each Attack card (red) across all players' hands.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 4, dmg =1, NextStance = 0},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Xitheros Stance 3. Xitheros cannot be taunted, stunned, or confused. Players with an aggro card in their hand suffer 1 damage.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 5, dmg =3, NextStance = 0},
+			  }
+			},
+			["1"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Xitheros Stance 1. Xitheros cannot be taunted or confused. All players draw 1. Then Xitheros gains 1 struggle for each Attack card (red) across all players' hands.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 7, dmg =1, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Xitheros Stance 2. Xitheros cannot be taunted or confused. Xitheros gains 1 struggle for each Attack card (red)across all players' hands.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 8, dmg =2, NextStance = 0},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Xitheros Stance 3. Xitheros cannot be taunted, stunned, or confused. Players with an aggro card in their hand suffer 1 damage.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 12, dmg =3, NextStance = 0},
+			  }
+			},
+			["2"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Xitheros Stance 1. Xitheros cannot be taunted or confused. All players draw 1. Then Xitheros gains 1 struggle for each Attack card (red) across all players' hands.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 15, dmg =2, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Xitheros Stance 2. Xitheros cannot be taunted or confused. Xitheros gains 1 struggle for each Attack card (red) across all players' hands.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 20, dmg =3, NextStance = 0},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Xitheros Stance 3. Xitheros cannot be taunted, stunned, or confused. Players with an aggro card in their hand suffer 2 damage.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 25, dmg =4, NextStance = 0},
+			  }
+			},
+			["3"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Xitheros Stance 1. Xitheros cannot be taunted or confused. All players draw 1. Then Xitheros gains 1 struggle for each offensive card across all players' hands.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 20, dmg =3, NextStance = 7},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Xitheros Stance 2. Xitheros cannot be taunted or confused. Xitheros gains 1 struggle for each offensive card across all players' hands.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 25, dmg =4, NextStance = 0},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Xitheros Stance 3. Xitheros cannot be taunted, stunned, or confused. Players with an aggro card in their hand suffer 2 damage.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 35, dmg =6, NextStance = 0},
+			  }
+			},
+		  },
+		  Expedition1Setup = {
+			Terrain = {{"bag_Wildmaw", "front"},{"bag_Brush", "front"},{"bag_Synaerea", "left"},{"bag_Water", "left"},{"bag_Brush", "back"},{"bag_Wildmaw", "back"},{"bag_Baethanis", "right"},{"bag_Water", "right"},},
+		  },
+		  Expedition2Setup = {
+			Terrain = {{"bag_Rock", "front"},{"bag_Wildmaw", "front"},{"bag_Synaerea", "left"},{"bag_Water", "left"},{"bag_Rock", "back"},{"bag_Wildmaw", "back"},{"bag_Synaerea", "right"},{"bag_Water", "right"},},
+		  },
+		},
+		["Taraska"] = {
+		  name = "Taraska",
+		  element = "Fire",
+		  desc = "Dino Might",
+		  track = "",
+		  behavior = "",
+		  attrition = "3",
+		  specialCards = "Lava Diagram",
+		  playerCards = "",
+		  FightLevel = {
+			["0"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Taraska Stance 1. Resistant. Shield 1. The front sector is protected until the end of round 1.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 5, dmg =1, NextStance = 8},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Taraska Stance 1. The front sector is no longer protected.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 5, dmg =1, NextStance = 8},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Taraska Stance 2. Resistant. Shield 1. Lava Geyser.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 3, dmg =1, NextStance = 4},
+				["4"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Taraska Stance 3. Shield 1.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 3, dmg =2, NextStance = 0},
+			  }
+			},
+			["1"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Taraska Stance 1. Resistant. Shield 1. The front sector is protected until the end of round 1.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 9, dmg =1, NextStance = 8},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Taraska Stance 1. The front sector is no longer protected.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 9, dmg =1, NextStance = 8},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Taraska Stance 2. Resistant. Shield 1. Lava Geyser.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 8, dmg =1, NextStance = 4},
+				["4"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Taraska Stance 3. Shield 1.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 7, dmg =2, NextStance = 0},
+			  }
+			},
+			["2"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Taraska Stance 1. Resistant. Shield 2. The front sector is protected until the end of round 1.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 20, dmg =2, NextStance = 8},
+				  ["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Taraska Stance 1. The front sector is no longer protected.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 20, dmg =2, NextStance = 8},
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Taraska Stance 2. Resistant. Shield 2. Lava Geyser.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 16, dmg =2, NextStance = 4},
+				["4"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Taraska Stance 3. Shield 2.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 14, dmg =3, NextStance = 0},
+			  }
+			},
+			["3"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Taraska Stance 1. Resistant. Shield 3. The front sector is protected until the end of round 1.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 28, dmg =3, NextStance = 8},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Taraska Stance 1. The front sector is no longer protected.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 28, dmg =3, NextStance = 8},			  
+				["3"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Taraska Stance 2. Resistant. Shield 3. Lava Geyser.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 25, dmg =3, NextStance = 4},
+				["4"] = {
+				  Colors = {{"frontbg","red"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Taraska Stance 3. Shield 3. Resolve Lava Geyser twice.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 22, dmg =4, NextStance = 0},
+			  }
+			},
+		  },
+		  Expedition1Setup = {
+			Terrain = {{"bag_Rock", "front"},{"bag_Rock", "left"},{"bag_Rock", "back"},{"bag_Rock", "right"},},
+		  },
+		  Expedition2Setup = {
+			Terrain = {{"bag_Rock", "back"},{"bag_Rock", "right"},},
+		  },
+		},
+		["Zekath"] = {
+		  name = "Zekath",
+		  element = "Thunder",
+		  desc = "But it's aliens",
+		  track = "Vibration",
+		  behavior = "",
+		  attrition = "",
+		  specialCards = "",
+		  playerCards = "",
+		  FightLevel = {
+			["0"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Zekath Stance 1. Place a counter on Electric Surge. Reveal a special peril card at random and bring it into play.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 2, dmg =1, NextStance = 6},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Zekath Stance 2. If the vibration level is 2 or higher, all players suffer 1 damage.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 3, dmg =1, NextStance = 2},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Zekath Stance 3. If the vibration level is 2 or higher, all players suffer 1 damage.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 3, dmg =1, NextStance = 0},
+			  }
+			},
+			["1"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Zekath Stance 1. Place a counter on Electric Surge. Reveal a special peril card at random and bring it into play.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 4, dmg =1, NextStance = 6},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Zekath Stance 2. Zekath gains " .. nbr-1 .. " struggle. If the vibration level is 2 or higher, all players suffer 1 damage.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr-1}},
+				  },
+				  toWound = 7, dmg =1, NextStance = 2},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Zekath Stance 3. If the vibration level is 2 or higher, all players suffer 1 damage.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 8, dmg =2, NextStance = 0},
+			  }
+			},
+			["2"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Zekath Stance 1. Place a counter on Electric Surge. Reveal a special peril card at random and bring it into play.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 10, dmg =2, NextStance = 6},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Zekath Stance 2. Zekath gains " .. nbr .. " struggle. If the vibration level is 2 or higher, all players suffer 2 damage.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr}},
+				  },
+				  toWound = 16, dmg =2, NextStance = 2},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Zekath Stance 3. If the vibration level is 2 or higher, all players suffer 2 damage.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 18, dmg =3, NextStance = 0},
+			  }
+			},
+			["3"] = {
+			  Stances = {
+				["1"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Zekath Stance 1. Place a counter on Electric Surge. Reveal a special peril card at random and bring it into play.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 15, dmg =3, NextStance = 6},
+				["2"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","red"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Zekath Stance 2. Zekath gains " .. nbr .. " struggle. If the vibration level is 2 or higher, all players suffer 3 damage.",
+					["Terrain"] = {},
+					["Actions"] = {{"addStruggle", nbr}},
+				  },
+				  toWound = 24, dmg =3, NextStance = 2},
+				["3"] = {
+				  Colors = {{"frontbg","white"}, {"leftbg","red"}, {"rightbg","red"}, {"backbg","white"}},
+				  ["onSetup"] = {
+					["broadcast"] = "Zekath Stance 3. If the vibration level is 2 or higher, all players suffer 3 damage.",
+					["Terrain"] = {},
+					["Actions"] = {},
+				  },
+				  toWound = 28, dmg =4, NextStance = 0},
+			  }
+			},
+		  },
+		  Expedition1Setup = {
+			Terrain = {{"bag_Cyricae", "front"},{"bag_Water", "front"},{"bag_Water", "left"},{"bag_Baethanis", "left"},{"bag_Rock", "back"},{"bag_Rock", "right"},},
+		  },
+		  Expedition2Setup = {
+			Terrain = {{"bag_Rock", "front"},{"bag_Fog", "left"},{"bag_Baethanis", "left"},{"bag_Baethanis", "back"},{"bag_Water", "back"},{"bag_Water", "right"},{"bag_Rock", "right"},},
+		  },
+		},
+	}, 
+	["Quests"] = {
+	  ["0"] = {
+		Monster = "Vyraxen",
+		Terrain = {{"bag_Brush", "left"},{"bag_Baethanis", "back"},{"bag_Cyricae", "right"},},
+	  },
+	  ["1"] = {
+		Monster = "Toramat",
+		Terrain = {{"bag_Rock", "front"},{"bag_Rock", "left"},{"bag_Plateau", "back"},{"bag_Sand", "right"},{"bag_Baethanis", "right"},},
+	  },
+	  ["2"] = {
+		Monster = "Ozew",
+		Terrain = {{"bag_Rock", "left"},{"bag_Rock", "back"},{"bag_Baethanis", "back"},{"bag_Baethanis", "right"},{"bag_Rock", "right"},},
+	  },
+	  ["3"] = {
+		Monster = "Korowon",
+		Terrain = {{"bag_Rock", "front"},{"bag_Synaerea", "front"},{"bag_Brush", "left"},{"bag_Water", "left"},{"bag_Plateau", "back"},{"bag_Baethanis", "right"},{"bag_Water", "right"},},
+	  },
+	  ["4"] = {
+		Monster = "Felaxir",
+		Terrain = {{"bag_Rock", "left"},{"bag_Baethanis", "left"},{"bag_Cyricae", "back"},{"bag_Cyricae", "right"},},
+	  },
+	  ["5"] = {
+		Monster = "Hurom",
+		Terrain = {{"bag_Cyricae", "left"},{"bag_Rock", "back"},{"bag_Rock", "right"},},
+	  },
+	  ["6"] = {
+		Monster = "Felaxir",
+		Terrain = {{"bag_Baethanis", "left"},{"bag_Rock", "back"},{"bag_Cyricae", "right"},},
+	  },
+	  ["7"] = {
+		Monster = "Tarragua",
+		Terrain = {{"bag_Rock", "left"},{"bag_Plateau", "back"},{"bag_Baethanis", "back"},{"bag_Rock", "right"},},
+	  },
+	  ["8"] = {
+		Monster = "Tarragua",
+		Terrain = {{"bag_Rock", "left"},{"bag_Rock", "back"},{"bag_Plateau", "back"},{"bag_Baethanis", "right"},},
+	  },
+	  ["9"] = {
+		Monster = "Orouxen",
+		Terrain = {{"bag_Rock", "left"},{"bag_Water", "left"},{"bag_Plateau", "back"},{"bag_Water", "right"},{"bag_Baethanis", "right"},},
+	  },
+	  ["10"] = {
+		Monster = "Orouxen",
+		Terrain = {{"bag_Sand", "front"},{"bag_Baethanis", "front"},{"bag_Water", "left"},{"bag_Brush", "left"},{"bag_Plateau", "back"},{"bag_Sand", "back"},{"bag_Water", "right"},{"bag_Synaerea", "right"},},
+	  },
+	  ["11"] = {
+		Monster = "Kharja",
+		Terrain = {{"bag_Rock", "back"},{"bag_Rock", "right"},},
+	  },
+	  ["12"] = {
+		Monster = "Dygorax",
+		Terrain = {{"bag_Wildmaw", "left"},{"bag_Rock", "left"},{"bag_Sand", "back"},{"bag_Sand", "right"},{"bag_Rock", "right"},},
+	  },
+	  ["13"] = {
+		Monster = "Ozew",
+		Terrain = {{"bag_Baethanis", "left"},{"bag_Rock", "back"},{"bag_Rock", "right"},},
+	  },
+	  ["14"] = {
+		Monster = "Dygorax",
+		Terrain = {{"bag_Sand", "front"},{"bag_Rock", "left"},{"bag_Sand", "back"},{"bag_Rock", "right"},{"bag_Wildmaw", "right"},},
+	  },
+	  ["15"] = {
+		Monster = "Felaxir",
+		Terrain = {{"bag_Cyricae", "left"},{"bag_Rock", "back"},{"bag_Rock", "right"},},
+	  },
+	  ["16"] = {
+		Monster = "Ozew",
+		Terrain = {{"bag_Baethanis", "left"},{"bag_Rock", "back"},{"bag_Rock", "right"},},
+	  },
+	  ["17"] = {
+		Monster = "Vyraxen",
+		Terrain = {{"bag_Brush", "front"},{"bag_Cyricae", "left"},{"bag_Baethanis", "back"},{"bag_Water", "back"},{"bag_Brush", "right"},},
+	  },
+	  ["18"] = {
+		Monster = "Toramat",
+		Terrain = {{"bag_Rock", "front"},{"bag_Wildmaw", "front"},{"bag_Wildmaw", "left"},{"bag_Rock", "left"},{"bag_Plateau", "back"},{"bag_Sand", "back"},{"bag_Sand", "right"},{"bag_Baethanis", "right"},},
+	  },
+	  ["19"] = {
+		Monster = "Hurom",
+		Terrain = {{"bag_Rock", "left"},{"bag_Rock", "back"},{"bag_Rock", "right"},},
+	  },
+	  ["20"] = {
+		Monster = "Morkraas",
+		Terrain = {{"bag_Cyricae", "left"},{"bag_Rock", "left"},{"bag_Rock", "back"},{"bag_Baethanis", "right"},},
+	  },
+	  ["21"] = {
+		Monster = "Hurom",
+		Terrain = {{"bag_Rock", "left"},{"bag_Rock", "right"},},
+	  },
+	  ["22"] = {
+		Monster = "Korowon",
+		Terrain = {{"bag_Plateau", "front"},{"bag_Sand", "front"},{"bag_Rock", "left"},{"bag_Water", "left"},{"bag_Water", "back"},{"bag_Baethanis", "back"},{"bag_Sand", "right"},{"bag_Synaerea", "right"},},
+	  },
+	  ["23"] = {
+		Monster = "Orouxen",
+		Terrain = {{"bag_Sand", "front"},{"bag_Baethanis", "front"},{"bag_Water", "left"},{"bag_Rock", "left"},{"bag_Fog", "back"},{"bag_Plateau", "back"},{"bag_Synaerea", "right"},{"bag_Water", "right"},},
+	  },
+	  ["24"] = {
+		Monster = "Dygorax",
+		Terrain = {{"bag_Wildmaw", "left"},{"bag_Rock", "left"},{"bag_Sand", "back"},{"bag_Baethanis", "back"},{"bag_Wildmaw", "right"},{"bag_Rock", "right"},},
+	  },
+	  ["25"] = {
+		Monster = "Kharja",
+		Terrain = {{"bag_Wildmaw", "left"},{"bag_Cyricae", "left"},{"bag_Rock", "back"},{"bag_Rock", "right"},{"bag_Wildmaw", "right"},},
+	  },
+	  ["26"] = {
+		Monster = "Tarragua",
+		Terrain = {{"bag_Fog", "left"},{"bag_Rock", "left"},{"bag_Rock", "back"},{"bag_Ice", "back"},{"bag_Fog", "right"},{"bag_Plateau", "right"},},
+	  },
+	  ["27"] = {
+		Monster = "Vyraxen",
+		Terrain = {{"bag_Rock", "left"},{"bag_Rock", "back"},{"bag_Cyricae", "back"},{"bag_Cyricae", "right"},},
+	  },
+	  ["28"] = {
+		Monster = "Morkraas",
+		Terrain = {{"bag_Rock", "back"},{"bag_Rock", "left"},{"bag_Ice", "left"},{"bag_Ice", "right"},},
+	  },
+	  ["29"] = {
+		Monster = "Jekoros",
+		Terrain = {{"bag_Cyricae", "front"},{"bag_Water", "left"},{"bag_Rock", "left"},{"bag_Rock", "back"},{"bag_Water", "right"},{"bag_Cyricae", "right"},},
+	  },
+	  ["30"] = {
+		Monster = "Jekoros",
+		Terrain = {{"bag_Baethanis", "left"},{"bag_Water", "left"},{"bag_Ice", "back"},{"bag_Rock", "back"},{"bag_Rock", "right"},{"bag_Water", "right"},},
+	  },
+	  ["31"] = {
+		Monster = "Zekath",
+		Terrain = {{"bag_Cyricae", "front"},{"bag_Water", "front"},{"bag_Water", "left"},{"bag_Baethanis", "left"},{"bag_Rock", "back"},{"bag_Rock", "right"},},
+	  },
+	  ["32"] = {
+		Monster = "Zekalith",
+		Terrain = {{"bag_Baethanis", "front"},{"bag_Water", "front"},{"bag_Water", "left"},{"bag_Rock", "left"},{"bag_Rock", "back"},{"bag_Cyricae", "left"},},
+	  },
+	  ["33"] = {
+		Monster = "Xitheros",
+		Terrain = {{"bag_Brush", "front"},{"bag_Wildmaw", "front"},{"bag_Cyricae", "left"},{"bag_Water", "left"},{"bag_Wildmaw", "back"},{"bag_Rock", "back"},{"bag_Water", "right"},{"bag_Baethanis", "right"},},
+	  },
+	  ["34"] = {
+		Monster = "Taraska",
+		Terrain = {{"bag_Rock", "left"},{"bag_Rock", "right"},},
+	  },
+	  ["35"] = {
+		Monster = "Taraska",
+		Terrain = {{"bag_Rock", "left"},{"bag_Rock", "right"},},
+	  },
+	  ["36"] = {
+		Monster = "Pazis",
+		Terrain = {{"bag_Baethanis", "front"},{"bag_Cyricae", "left"},{"bag_Brush", "left"},{"bag_Baethanis", "back"},{"bag_Synaerea", "back"},{"bag_JungleBrush", "right"},},
+	  },
+	  ["37"] = {
+		Monster = "Nagarjas",
+		Terrain = {{"bag_JungleBrush", "front"},{"bag_Wildmaw", "front"},{"bag_Water", "left"},{"bag_Synaerea", "left"},{"bag_Wildmaw", "back"},{"bag_Cyricae", "back"},{"bag_Baethanis", "right"},{"bag_Water", "right"},},
+	  },
+	  ["38"] = {
+		Monster = "Pazis",
+		Terrain = {{"bag_Synaerea", "front"},{"bag_Wildmaw", "left"},{"bag_JungleBrush", "left"},{"bag_Baethanis", "back"},{"bag_Brush", "right"},{"bag_Wildmaw", "right"},},
+	  },
+	  ["39"] = {
+		Monster = "Nagarjas",
+		Terrain = {{"bag_Cyricae", "front"},{"bag_Wildmaw", "left"},{"bag_JungleBrush", "left"},{"bag_Baethanis", "back"},{"bag_Brush", "right"},{"bag_Synaerea", "right"},},
+	  },
+	  ["40"] = {
+		Monster = "Jekoros",
+		Terrain = {{"bag_Cyricae", "front"},{"bag_Rock", "front"},{"bag_Water", "left"},{"bag_Rock", "left"},{"bag_Rock", "back"},{"bag_Cyricae", "back"},{"bag_Water", "right"},{"bag_Baethanis", "right"},},
+	  },
+	  ["41"] = {
+		Monster = "Hydar",
+		Terrain = {{"bag_Synaerea", "front"},{"bag_Wildmaw", "left"},{"bag_Baethanis", "left"},{"bag_Baethanis", "back"},{"bag_Wildmaw", "right"},{"bag_Brush", "right"},},
+	  },
+	  ["42"] = {
+		Monster = "Reikal",
+		Terrain = {{"bag_Swamp", "front"},{"bag_Fog", "left"},{"bag_Cyricae", "left"},{"bag_Swamp", "back"},{"bag_Swamp", "right"},{"bag_Fog", "right"},},
+	  },
+	  ["43"] = {
+		Monster = "Reikal",
+		Terrain = {{"bag_Fog", "front"},{"bag_Fog", "back"},{"bag_Swamp", "left"},{"bag_Cyricae", "left"},{"bag_Swamp", "right"},{"bag_Cyricae", "right"},},
+	  },
+	  ["44"] = {
+		Monster = "Hydar",
+		Terrain = {{"bag_Brush", "front"},{"bag_Synaerea", "front"},{"bag_Wildmaw", "left"},{"bag_Baethanis", "left"},{"bag_Synaerea", "back"},{"bag_Baethanis", "back"},{"bag_Brush", "right"},{"bag_Wildmaw", "right"},},
+	  },
+	  ["45"] = {
+		Monster = "Toramat",
+		Terrain = {{"bag_Wildmaw", "front"},{"bag_Rock", "front"},{"bag_Rock", "left"},{"bag_Sand", "left"},{"bag_Plateau", "back"},{"bag_Wildmaw", "back"},{"bag_Sand", "right"},{"bag_Baethanis", "right"},},
+	  },
+	  ["46"] = {
+		Monster = "Sirkaaj",
+		Terrain = {{"bag_Ice", "front"},{"bag_Ice", "left"},{"bag_Rock", "left"},{"bag_Baethanis", "back"},{"bag_Ice", "back"},{"bag_Ice", "right"},{"bag_Rock", "right"},},
+	  },
+	  ["47"] = {
+		Monster = "Sirkaaj",
+		Terrain = {{"bag_Ice", "front"},{"bag_Ice", "left"},{"bag_Rock", "left"},{"bag_Baethanis", "back"},{"bag_Ice", "back"},{"bag_Ice", "right"},},
+	  },
+	  ["48"] = {
+		Monster = "Mamuraak",
+		Terrain = {{"bag_Ice", "front"},{"bag_Ice", "left"},{"bag_Ice", "back"},{"bag_Rock", "back"},{"bag_Rock", "right"},{"bag_Ice", "right"},},
+	  },
+	  ["49"] = {
+		Monster = "Mamuraak",
+		Terrain = {{"bag_Ice", "front"},{"bag_Ice", "left"},{"bag_Ice", "back"},{"bag_Ice", "right"},},
+	  },
+	},
+}
+	 
