@@ -1,0 +1,103 @@
+TOKENS = {
+    ['Struggle'] = { tag = 'bag_struggle' },
+    ['Acceleration'] = { tag = 'bag_acceleration' },
+    ['Dust'] = { tag = 'bag_dust' },
+    ['Vulnerable'] = { tag = 'bag_vulnerable' },
+    ['Shard'] = { tag = 'bag_shard' },
+    ['Confused'] = { tag = 'bag_confused' },
+    ['Thornvine'] = { tag = 'bag_thornvine' },
+    ['Stunned'] = { tag = 'bag_stunned' },
+    ['Trigger'] = { tag = 'bag_trigger' },
+    ['Blinded'] = { tag = 'bag_blinded' },
+    ['BonusMonsterDamage'] = { tag = 'bag_bonus_m_damage' },
+    ['Counter'] = { tag = 'bag_counter' },
+}
+
+function addSub(a,b,ButtonID) 
+    if ButtonID == "plusStr" then 
+        Global.call("addStruggle",1)
+    elseif ButtonID == "minusStr" then
+        Global.call("removeStruggle")
+    elseif ButtonID == "plusAcc" then
+        Global.call("addAccel",1)
+    else
+        Global.call("removeAccel")
+    end
+end 
+
+function onLoad()
+    -- We have to use createButton for the spawners, 
+    -- otherwise XML UI is interfering with picking up the token on top of it.
+    local index = 1
+    for tokenName, _ in pairs(TOKENS) do
+        -- Create the spawner function
+        -- Left click -> face up, other(right) click -> face down
+        local functionName = 'spawn' .. tokenName .. 'Token'
+        
+        -- Counter spawns sideways
+        if tokenName == 'Counter' then
+            self.setVar(functionName, function(_, color, alt_click)
+                hoverWrapper(Player[color], spawnTokenOnButton, tokenName, alt_click == true and {0.00, 225.00, 180.00} or {0.00, 225.00, 0.00})
+            end)
+        else
+            self.setVar(functionName, function(_, color, alt_click)
+                hoverWrapper(Player[color], spawnTokenOnButton, tokenName, alt_click == true and {0.00, 180.00, 180.00} or nil)
+            end)
+        end
+
+        -- Create the corresponding button
+        self.createButton({
+            click_function = functionName,
+            function_owner = self,
+            label          = '',
+            position       = {-0.632 + (index-1) * 0.15975, 0.1, index%2==1 and 0.867 or 0.693},
+            rotation       = {0, 180, 0},
+            width          = 78,
+            height         = 78,
+            font_size      = 5,
+            color          = {0.5, 0.5, 0.5, 0},
+        })
+
+        -- Save the button index for when we need this button
+        TOKENS[tokenName].button_index = index
+
+        index = index + 1
+    end
+
+end
+
+
+
+--------------------
+-- Token spawn
+
+-- Spawn a token on top of the button
+function spawnTokenOnButton(tokenName, rotation)
+    -- Get the spawn position from the button
+    local spawnPosition = self.getButtons()[TOKENS[tokenName].button_index].position
+    -- X needs to be reversed I assume because the player mat is upside down?
+    spawnPosition.x = -spawnPosition.x
+    -- Spawn the token slightly higher
+    spawnPosition.y = spawnPosition.y + 0.25
+
+    -- Spawn the token from the bag (to keep a single source of tokens)
+    local tokenBags = getObjectsWithTag(TOKENS[tokenName].tag)
+    if #tokenBags < 1 then
+        broadcastToAll('Missing bag for token ' .. tokenName .. '.', Color.Red)
+        return
+    end
+
+    tokenBags[1].takeObject({
+        position = self.positionToWorld(spawnPosition),
+        rotation = rotation or {0.00, 180.00, 0.00},
+        smooth = false,
+    })
+end
+
+-- Wrapper to limit function use when hovering over this playermat
+-- (prevent button use through cards and unintended clicks)
+function hoverWrapper(player, callback, ...)
+    if player ~= nil and player.getHoverObject() == self and callback ~= nil then
+        callback(...)
+    end
+end
