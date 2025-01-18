@@ -1,0 +1,500 @@
+AGGRO_ON_URL = 'https://steamusercontent-a.akamaihd.net/ugc/2452852111571390678/145B47FAD34C9279DB6464D8A4F9120AB333504B/'
+AGGRO_OFF_URL = 'https://steamusercontent-a.akamaihd.net/ugc/2452852111571389540/CA30F389ADD46B0FE9F0CFABD07C20615EFDE103/'
+
+EXTENDED_MAT = 'https://steamusercontent-a.akamaihd.net/ugc/2456230698421589437/D451C0F08941636363906967B9AA0318750DD83D/'
+COLLAPSED_MAT = 'https://steamusercontent-a.akamaihd.net/ugc/2456230698421604492/28494DF49EE1255AADFAD79BF9905F2793376A53/'
+
+-- Keep all of them so the copy paste is easier between player mats
+FIRST_PLAYER_URLS = {
+    ['Blue'] = 'https://steamusercontent-a.akamaihd.net/ugc/2456230531535248821/110A9FFB2B665FE3139F44E22350F0CBF8A3D743/',
+    ['Green'] = 'https://steamusercontent-a.akamaihd.net/ugc/2456230531535248971/E78FE186BBF1E42BD90AADF6A72B2C844BDDD8F5/',
+    ['Yellow'] = 'https://steamusercontent-a.akamaihd.net/ugc/2456230531535249223/DE77A57AEF52D95333974E82E1E642DA3E6D130D/',
+    ['Orange'] = 'https://steamusercontent-a.akamaihd.net/ugc/2456230531535249070/D878690B51AD96CBF2E542D21055F1A0EA01DB93/',
+    ['Red'] = 'https://steamusercontent-a.akamaihd.net/ugc/2456230531535249147/1A2CFA56B8E90764234D91CA0B220CCB1962EA8B/',
+}
+
+TOKENS = {
+    -- Left side tokens
+    ['Exhausted'] = { tag = 'bag_exhausted' },
+    ['Dazed'] = { tag = 'bag_dazed' },
+    ['Defensive'] = { tag = 'bag_defensive' },
+    ['Disrupt'] = { tag = 'bag_disrupt' },
+    ['Strain'] = { tag = 'bag_strain' },
+    ['Depleted'] = { tag = 'bag_depleted' },
+    ['BonusDamage'] = { tag = 'bag_bonus_damage' },
+    ['Burned'] = { tag = 'bag_burned' },
+
+    -- Right side tokens
+    ['Threatened'] = { tag = 'bag_threatened' },
+    ['Stamina'] = { tag = 'bag_stamina' },
+    ['Counter'] = { tag = 'bag_counter' },
+    ['KO'] = { tag = 'bag_ko' },
+}
+
+
+character_sheet_stats = {
+    -- skill_tree = {},
+    -- materials = {},
+    -- plants = {},
+    -- elements = {},
+}
+
+aggro_is_enabled = false
+is_first_player = false
+is_character_sheet_open = true
+
+function onLoad(script_state)
+    local saveData = JSON.decode(script_state)
+    -- saveData = nil
+
+    -- Set the color on the character sheet counters and checkboxes
+    -- It's done here so that the copy paste of XML is easy (otherwise it'd be one color per xml)
+    for checkboxIndex = 1, 5 do
+        for stepIndex = 1, 2 do
+            disableCheckmark(character_sheet_stats, 'skilltree-' .. checkboxIndex .. '-' .. stepIndex)
+        end
+    end
+
+    for matIndex = 1, 6 do
+        self.UI.setAttribute('materials-' .. matIndex, 'color', getPastelColorFromTag() .. 'FF' or '#FFFFFFFF')
+        self.UI.setAttribute('plants-' .. matIndex, 'color', getPastelColorFromTag() .. 'FF' or '#FFFFFFFF')
+    end
+
+    for elementIndex = 1, 9 do
+        self.UI.setAttribute('elements-' .. elementIndex, 'color', getPastelColorFromTag() .. 'FF' or '#FFFFFFFF')
+    end
+
+    -- Use save data
+    if saveData ~= nil then
+        if saveData.aggro_is_enabled == true then
+            enableAggro(true)
+        end
+
+        if saveData.is_first_player == true then
+            enableFirstPlayer(true)
+        end
+
+        if saveData.is_character_sheet_open then
+            openCharacterSheet()
+        else
+            closeCharacterSheet()
+        end
+
+        if saveData.character_sheet_stats ~= nil then
+            character_sheet_stats = saveData.character_sheet_stats
+
+            -- Set values
+            for id, value in pairs(character_sheet_stats) do
+                if id:find('skilltree') then
+                    if value == true then
+                        enableCheckmark(character_sheet_stats, id)
+                    else
+                        disableCheckmark(character_sheet_stats, id)
+                    end
+                else
+                    updateCounter(character_sheet_stats, id, value)
+                end
+            end
+        end
+    end
+
+    -- We have to use createButton for the spawners, 
+    -- otherwise XML UI is interfering with picking up the token on top of it.
+    local index = 1
+    -- Left side tokens
+    for _, tokenName in ipairs({ 'Exhausted', 'Dazed', 'Defensive', 'Disrupt', 'Strain', 'Depleted',
+                                'BonusDamage', 'Burned' }) do
+        -- Create the spawner function
+        -- Left click -> face up, other(right) click -> face down
+        local functionName = 'spawn' .. tokenName .. 'Token'
+        self.setVar(functionName, function(_, color, alt_click)
+            hoverWrapper(Player[color], spawnTokenOnButton, tokenName, alt_click == true and {0.00, 180.00, 180.00} or nil)
+        end)
+
+        -- Create the corresponding button
+        self.createButton({
+            click_function = functionName,
+            function_owner = self,
+            label          = '',
+            position       = {(index%2==1 and -0.98 or -0.887), 1, -1.285 + (index-1) * 0.126},
+            rotation       = {0, 180, 0},
+            width          = 70,
+            height         = 70,
+            color          = {0.5, 0.5, 0.5, 0},
+        })
+
+        -- Save the button index for when we need this button
+        TOKENS[tokenName].button_index = index
+
+        index = index + 1
+    end
+
+    -- Right side tokens
+    for tokenName, details in pairs({ 
+            ['Threatened'] = { position = {0.938, 1, -0.690}, width = 90, height = 90 },
+            ['Stamina'] = { position = {0.938, 1, -0.492}, width = 90, height = 90 },
+            ['Counter'] = { position = {0.786, 1, -0.315}, width = 70, height = 70 },
+            ['KO'] = { position = {1.001, 1, -0.315}, width = 70, height = 70 }
+    }) do
+        -- Create the spawner function
+        -- Left click -> face up, other(right) click -> face down
+        local functionName = 'spawn' .. tokenName .. 'Token'
+
+        -- Counter spawns sideways
+        if tokenName == 'Counter' then
+            self.setVar(functionName, function(_, color, alt_click)
+                hoverWrapper(Player[color], spawnTokenOnButton, tokenName, alt_click == true and {0.00, 225.00, 180.00} or {0.00, 225.00, 0.00})
+            end)
+        else
+            self.setVar(functionName, function(_, color, alt_click)
+                hoverWrapper(Player[color], spawnTokenOnButton, tokenName, alt_click == true and {0.00, 180.00, 180.00} or nil)
+            end)
+        end
+
+        -- Create the corresponding button
+        self.createButton({
+            click_function = functionName,
+            function_owner = self,
+            label          = '',
+            position       = details.position,
+            rotation       = {0, 180, 0},
+            width          = details.width,
+            height         = details.height,
+            font_size      = 5,
+            color          = {0.5, 0.5, 0.5, 0},
+        })
+
+        -- Save the button index for when we need this button
+        TOKENS[tokenName].button_index = index
+
+        index = index + 1
+    end
+end
+
+function onSave()
+    local saveData = {}
+
+    saveData.aggro_is_enabled = aggro_is_enabled
+    saveData.is_first_player = is_first_player
+    saveData.is_character_sheet_open = is_character_sheet_open
+    saveData.character_sheet_stats = character_sheet_stats
+
+    return JSON.encode(saveData)
+end
+
+-- Wrapper to limit function use when hovering over this playermat 
+-- (prevent button use through cards and unintended clicks)
+function hoverWrapper(player, callback, ...)
+    if player ~= nil and player.getHoverObject() == self and callback ~= nil then
+        callback(...)
+    end
+end
+
+--------------------
+-- Aggro UI
+
+-- Small wrapper for the XML UI
+function toggleAggroWrapper(player)
+    hoverWrapper(player, toggleAggro)
+end
+
+-- Highlight this icon and grey out the other icons, or grey out this one if it's already red.
+function toggleAggro()
+    if not aggro_is_enabled then
+        enableAggro()
+
+        -- Disable all other aggro icons
+        for _, object in ipairs(getObjectsWithTag('player_board')) do
+            if object ~= self then
+                object.call('disableAggro')
+            end
+        end
+    else
+        disableAggro()
+    end
+end
+
+function enableAggro(hideBroadcast)
+    -- hideBroadcast is used to avoid displaying the broadcast message on setup
+    hideBroadcast = hideBroadcast or false
+
+    -- Enable aggro on this mat
+    self.UI.setAttribute('aggro-button', 'image', AGGRO_ON_URL)
+    aggro_is_enabled = true
+
+    local matColor = getMatColorFromTag()
+
+    if matColor then
+        -- Display who has just pulled aggro
+        if not hideBroadcast then
+            local playerName = Player[matColor].steam_name
+            if playerName then
+                broadcastToAll(playerName .. ' (' .. matColor .. ') has drawn aggro!', Color[matColor])
+            else
+                broadcastToAll(matColor .. ' has drawn aggro!', Color[matColor])
+            end
+        end
+    else
+        broadcastToAll('Object ' .. self.getGUID() .. ' is missing a color tag.', Color.Red)
+    end
+end
+
+function disableAggro()
+    self.UI.setAttribute('aggro-button', 'image', AGGRO_OFF_URL)
+    aggro_is_enabled = false
+end
+
+--------------------
+-- First player UI
+-- Small wrapper for the XML UI
+function toggleFirstPlayerWrapper(player)
+    hoverWrapper(player, toggleFirstPlayer)
+end
+
+-- Highlight this icon and grey out the other icons, or grey out this one if it's already highlighted
+function toggleFirstPlayer()
+    if not is_first_player then
+        enableFirstPlayer()
+
+        -- Disable all other FP icons
+        for _, object in ipairs(getObjectsWithTag('player_board')) do
+            if object ~= self then
+                object.call('disableFirstPlayer')
+            end
+        end
+    else
+        disableFirstPlayer()
+    end
+end
+
+function enableFirstPlayer(hideBroadcast)
+    -- hideBroadcast is used to avoid displaying the broadcast message on setup
+    hideBroadcast = hideBroadcast or false
+
+    local matColor = getMatColorFromTag()
+
+    if not matColor then
+        broadcastToAll('Object ' .. self.getGUID() .. ' is missing a color tag.', Color.Red)
+        -- Default to red color if the color tag is missing
+        matColor = 'Red'
+    end
+
+    -- Enable first player on this mat
+    self.UI.setAttribute('first-player-button', 'image', FIRST_PLAYER_URLS[getMatColorFromTag()])
+    self.UI.setAttribute('first-player-button', 'color', '#FFFFFFFF')
+    is_first_player = true
+
+    -- Display who is now the first player
+    if not hideBroadcast then
+        local playerName = Player[matColor].steam_name
+        if playerName then
+            broadcastToAll(playerName .. ' (' .. matColor .. ') is the first player!', Color[matColor])
+        else
+            broadcastToAll(matColor .. ' is the first player!', Color[matColor])
+        end
+    end
+end
+
+function disableFirstPlayer()
+    -- Hide the white square showing on empty image
+    self.UI.setAttribute('first-player-button', 'color', '#FFFFFF00')
+    self.UI.setAttribute('first-player-button', 'image', '')
+    is_first_player = false
+end
+
+--------------------
+-- Character sheet UI
+-- Small wrapper for the XML UI
+function toggleCharacterSheetWrapper(player)
+    hoverWrapper(player, toggleCharacterSheet)
+end
+
+-- Hide or display the character sheet
+function toggleCharacterSheet()
+    if not is_character_sheet_open then
+        openCharacterSheet()
+    else
+        closeCharacterSheet()
+    end
+end
+
+function openCharacterSheet()
+    -- Change the mat image
+    self.setCustomObject({
+        type = 1,
+        face = EXTENDED_MAT,
+        back = EXTENDED_MAT,
+    })
+    -- self.reload()
+
+    -- Show the UI
+    self.UI.setAttribute('character-sheet-buttons', 'active', true)
+
+    is_character_sheet_open = true
+end
+
+function closeCharacterSheet()
+    -- Change the mat image
+    self.setCustomObject({
+        type = 1,
+        face = COLLAPSED_MAT,
+        back = COLLAPSED_MAT,
+    })
+    -- self.reload()
+
+    -- Hide the UI
+    self.UI.setAttribute('character-sheet-buttons', 'active', false)
+
+    is_character_sheet_open = false
+end
+
+-- Small wrapper for the XML UI
+function toggleSkillTreeCheckmarkWrapper(player, _, id)
+    hoverWrapper(player, toggleCheckmark, character_sheet_stats, id)
+end
+
+--------------------
+-- Token spawn
+
+-- Spawn a token on top of the button
+function spawnTokenOnButton(tokenName, rotation)
+    -- Get the spawn position from the button
+    local spawnPosition = self.getButtons()[TOKENS[tokenName].button_index].position
+    -- X needs to be reversed I assume because the player mat is upside down?
+    spawnPosition.x = -spawnPosition.x
+    -- Spawn the token slightly higher
+    spawnPosition.y = spawnPosition.y + 3
+
+    -- Spawn the token from the bag (to keep a single source of tokens)
+    local tokenBags = getObjectsWithTag(TOKENS[tokenName].tag)
+    if #tokenBags < 1 then
+        broadcastToAll('Missing bag for token ' .. tokenName .. '.', Color.Red)
+        return
+    end
+
+    tokenBags[1].takeObject({
+        position = self.positionToWorld(spawnPosition),
+        rotation = rotation or {0.00, 180.00, 0.00},
+        smooth = false,
+    })
+end
+
+----------------------
+-- Utility functions
+
+-- ID is the checkmark's ID
+function toggleCheckmark(array, id)
+    if not array then return end
+
+    if array[id] then
+        disableCheckmark(array, id)
+    else
+        enableCheckmark(array, id)
+    end
+end
+
+function disableCheckmark(array, id)
+    if not array then return end
+
+    array[id] = false
+    local color = getPastelColorFromTag() or '#FFFFFF'
+    self.UI.setAttribute(id, 'colors', color .. '00|' .. color .. '99|' .. color .. 'BB|rgba(0.78,0.78,0.78,0.5)')
+end
+
+function enableCheckmark(array, id)
+    if not array then return end
+
+    array[id] = true
+    local color = getPastelColorFromTag() or '#FFFFFF'
+    self.UI.setAttribute(id, 'colors', color .. 'FF|' .. color .. '99|'.. color .. 'BB|rgba(0.78,0.78,0.78,0.5)')
+end
+
+-- We're passing character_sheet_stats here, just in case we end up using the data from is
+-- That way we just change it to character_sheet_stats.whatever (by parsing the ID for the resource type) and can use them in the forge
+-- The ID passed to incrementCounter is the ID of the text element we're updating (aka the counter)
+-- CS here stands for character sheet, that way we can have wrapper for other stuff if required
+function incrementCSCounterWrapper(player, _, id)
+    hoverWrapper(player, incrementCounter, character_sheet_stats, id:gsub('%-plus', ''))
+end
+
+-- Positive clamp because we don't need negative quantities
+function decrementCSCounterWrapper(player, _, id)
+    hoverWrapper(player, decrementCounter, character_sheet_stats, id:gsub('%-minus', ''), positiveClamp)
+end
+
+function incrementCounter(array, id, clamp)
+    if not array or not id then return end
+
+    local newValue = tonumber(array[id] or '0') + 1
+    if clamp ~= nil and type(clamp) == 'function' then
+        newValue = clamp(newValue)
+    end
+
+    updateCounter(array, id, newValue)
+end
+
+function decrementCounter(array, id, clamp)
+    if not array or not id then return end
+
+    local newValue = tonumber(array[id] or '0') - 1
+    if clamp ~= nil and type(clamp) == 'function' then
+        newValue = clamp(newValue)
+    end
+
+    updateCounter(array, id, newValue)
+end
+
+function updateCounter(array, id, value)
+    if not array or not id or value == nil then return end
+
+    array[id] = value
+    self.UI.setAttribute(id, 'text', value)
+end
+
+-- For now use the same color, might get tweaked a little to keep them pretty and not hurt your eyes
+function getPastelColorFromTag()
+    local color = getMatColorFromTag()
+
+    if color == 'Blue' then
+        return '#4572cc'
+    elseif color == 'Green' then
+        return '#49b851'
+    elseif color == 'Yellow' then
+        return '#ebea57'
+    elseif color == 'Orange' then
+        return '#d4723d'
+    elseif color == 'Red' then
+        return '#d44333'
+    else
+        return nil
+    end
+end
+
+-- Can be done a number of other ways, 
+-- Simple variable at the top (but cannot simply copy paste)
+-- Global variable called from here (but needs to call Global)
+-- Tags (but need to remember to add the tag if the player mats change and need a tag map)
+-- GUID switch here is probably the easiest to change and you can just copy paste everything
+function getMatColorFromTag()
+    if self.hasTag('color_blue') then
+        return 'Blue'
+    elseif self.hasTag('color_green') then
+        return 'Green'
+    elseif self.hasTag('color_yellow') then
+        return 'Yellow'
+    elseif self.hasTag('color_orange') then
+        return 'Orange'
+    elseif self.hasTag('color_red') then
+        return 'Red'
+    else
+        return nil
+    end
+end
+
+function positiveClamp(value)
+    if value < 0 then
+        return 0
+    else
+        return value
+    end
+end
