@@ -1,0 +1,141 @@
+monsterImageList = {
+
+}
+index = 1
+monsterGUID = "d3d7fe"
+myexp = ""
+
+function summon(a,b,c)
+	self.UI.setAttribute("banner", "image",self.UI.getAttribute(c,"image") )
+	self.UI.setAttribute("banner", "tooltip", "Start the Fight")
+	self.UI.setAttribute("monsterselector", "active", "false")
+	self.UI.setAttribute("title", "text", self.UI.getAttribute(c.."name","text"))
+	self.UI.setAttribute("+", "image","x")
+	self.UI.setAttribute("+", "onclick","reset")
+	self.UI.setAttribute("title","color", self.UI.getAttribute(c.."name","color"))
+end
+
+function setexpedition(a,b,c)
+    self.UI.setAttribute("Expedition1Setup","image", "")
+    self.UI.setAttribute("Expedition2Setup","image", "")
+    self.UI.setAttribute("Expedition1Setup","color", "")
+    self.UI.setAttribute("Expedition2Setup","color", "")
+    self.UI.setAttribute("Expedition1Setup","textColor", "white")
+    self.UI.setAttribute("Expedition2Setup","textColor", "white")
+    self.UI.setAttribute(c,"image", "https://steamusercontent-a.akamaihd.net/ugc/2493386495702200472/672A5FD0825986A6FDC42412A871337EBA298735/")
+    self.UI.setAttribute(c,"color", "red")
+    self.UI.setAttribute(c,"textColor", "white")
+    myexp = c
+end 
+
+function reset()
+    	self.UI.setAttribute("+", "onclick","reset")
+    	self.UI.setAttribute("banner", "image","Primal" )
+    	self.UI.setAttribute("banner", "tooltip", "")
+    	self.UI.setAttribute("title", "text","Choose a monster")
+    	self.UI.setAttribute("+", "image","Rightb")
+    	self.UI.setAttribute("+", "onclick","plus")
+    	self.UI.setAttribute("title","color", "yellow")
+    self.UI.setAttribute("Expedition1Setup","image", "")
+    self.UI.setAttribute("Expedition2Setup","image", "")
+    self.UI.setAttribute("Expedition1Setup","color", "")
+    self.UI.setAttribute("Expedition2Setup","color", "")
+    self.UI.setAttribute("Expedition1Setup","textColor", "white")
+    self.UI.setAttribute("Expedition2Setup","textColor", "white")
+    myexp = ""
+end 
+
+function setImages() 
+    mnstbook = getObjectFromGUID(monsterGUID)
+    mnstbook.takeObject({position = {300,100,300}, smooth = false, callback_function = 
+    function(infmonsterbag) 
+        infmonsterbag.setLock(true)
+        local posBag = infmonsterbag.getPosition()
+        local offset = 10
+        local mnstble = {}
+        for _,monsterbag in pairs(infmonsterbag.getObjects()) do 
+            posBag.y = posBag.y + offset
+            posBag.z = posBag.z + offset
+            infmonsterbag.takeObject({guid = monsterbag.guid, position = posBag, smooth = false, callback_function = 
+            function(oneMonster)
+                
+                oneMonster.setLock(true)        
+                for _,item in pairs(oneMonster.getObjects()) do 
+                    for _,tags in pairs(item.tags) do
+                        if tags == "actor_stand" then                           
+                            oneMonster.takeObject({guid = item.guid, smooth = false, callback_function = function(standee)
+                                local thecolor = Color(standee.getColorTint())     
+                                local finalColor =  "rgba(".. thecolor[1] .. ", " .. thecolor[2] .. ", " .. thecolor[3] .. ", " .. thecolor[4] .. ")"
+                                if standee.getName() ~= "Awakened" then 
+                                    table.insert(monsterImageList, {
+                                        name = standee.getName(),
+                                        img = standee.getCustomObject().image,
+                                        mColor = finalColor,
+                                    })
+                                end            
+                                standee.destruct()
+                            end})
+                        end
+                    end 
+                end 
+              
+                oneMonster.destruct()                        
+                
+                    end})
+        end
+        infmonsterbag.destruct()
+    end})
+
+end 
+
+function SetupMonster()
+    if myexp == "" then 
+        broadcastToAll("Pick an expedition number", Color.Orange)
+    else
+        Global.call("CleanMonster")
+        Global.call("SetupMonster", {self.UI.getAttribute("title","text"),self.UI.getAttribute("LevelInput", "text"), myexp}
+)
+    end
+
+end 
+
+function onload() 
+    setImages() 
+	
+	Wait.frames(function() 
+	for i, imglist in ipairs(monsterImageList) do 
+		self.UI.setAttribute("monster"..i, "image", imglist.img)
+		self.UI.setAttribute("monster"..i.."name", "text", imglist.name)
+		self.UI.setAttribute("monster"..i.."name","color", imglist.mColor)
+	end
+
+	end, 60)
+    
+end 
+
+function handleLevel(a,b,c)
+    if b == "" then 
+        self.UI.SetAttribute(c, "text", "0")
+    else
+        self.UI.SetAttribute(c, "text", b)
+    end
+end 
+
+function setAttr(attrID, attrTag, attrVal)
+    if attrVal == "" then
+        self.UI.setAttribute(attrID, "active", "false")
+        self.UI.setAttribute(attrID, attrTag, attrVal)
+    else 
+        if attrID == 'title' and attrVal == "Primal" then 
+            attrVal = "Choose a monster"
+        end
+        self.UI.setAttribute(attrID, "active", "true")
+        self.UI.setAttribute(attrID, attrTag, attrVal)
+    end 
+
+end 
+
+function plus()
+   self.UI.setAttribute("monsterselector", "active", "true")
+end
+
