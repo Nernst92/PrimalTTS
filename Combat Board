@@ -1,0 +1,21 @@
+RoundNumber = 0
+
+function NextRound()
+    if RoundNumber == 10 then 
+        RoundNumber = 0
+    end
+    RoundNumber = RoundNumber+1
+    local y = -76 + (16*RoundNumber)
+    if RoundNumber > 3 then 
+        y = y + 1
+    elseif RoundNumber > 9 then 
+        y = y + 3
+    end 
+    poslocal = "-98 " .. y .. " -40"
+    self.UI.setAttribute("btnNext", "position", poslocal)
+end 
+
+function ResetTimer()
+    RoundNumber = 0
+    self.UI.setAttribute("btnNext", "position", "-98 -82 -40")
+end
