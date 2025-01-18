@@ -1,0 +1,921 @@
+
+--Set this to true while editing and false when you have finished
+disableSave = false
+BookStandGUID = "653f1d"
+buttonFontColor = {0,0,0}
+
+buttonColor = {1,1,1}
+
+buttonScale = {0.1,0.1,0.1}
+campaignLevel = 0
+
+--This is the button placement information
+defaultButtonData = {
+    --Add checkboxes
+    checkbox = {
+        --[[
+        pos   = the position (pasted from the helper tool)
+        size  = height/width/font_size for checkbox
+        state = default starting value for checkbox (true=checked, false=not)
+        ]]
+        --1st checkbox
+        {
+            pos   = {-0.955,0.1,-0.710},
+            size  = 300,
+            state = false,
+            campaignLevel = 1,
+        },
+        --2nd checkbox
+        {
+            pos   = {-0.845,0.1,-0.710},
+            size  = 300,
+            state = false,
+        },
+        --3rd checkbox
+        {
+            pos   = {-0.735,0.1,-0.710},
+            size  = 300,
+            state = false,
+        },
+        --4th checkbox
+        {
+            pos   = {-0.630,0.1,-0.710},
+            size  = 300,
+            state = false,
+            campaignLevel = 2,
+        },
+        --5th checkbox
+        {
+            pos   = {-0.525,0.1,-0.710},
+            size  = 300,
+            state = false,
+        },
+        --6th checkbox
+        {
+            pos   = {-0.415,0.1,-0.710},
+            size  = 300,
+            state = false,
+        },
+        --7th checkbox
+        {
+            pos   = {-0.310,0.1,-0.710},
+            size  = 300,
+            state = false,
+        },
+        --8th checkbox
+        {
+            pos   = {-0.200,0.1,-0.710},
+            size  = 300,
+            state = false,
+            campaignLevel = 3
+        },
+        --9th checkbox
+        {
+            pos   = {-0.095,0.1,-0.710},
+            size  = 300,
+            state = false
+        },
+        --10th checkbox
+        {
+            pos   = {0.010,0.1,-0.710},
+            size  = 300,
+            state = false
+        },
+        --11th checkbox
+        {
+            pos   = {0.120,0.1,-0.710},
+            size  = 300,
+            state = false
+        },
+
+        --herbalist 1
+        {
+            pos   = {-0.965,0.1,-0.39},
+            size  = 250,
+            state = false
+        },
+        --herbalist 2
+        {
+            pos   = {-0.879,0.1,-0.39},
+            size  = 250,
+            state = false
+        },
+        --herbalist 3
+        {
+            pos   = {-0.792,0.1,-0.39},
+            size  = 250,
+            state = false
+        },
+
+        --forge 1
+        {
+            pos   = {-0.965,0.1,-0.103},
+            size  = 250,
+            state = false
+        },
+        --forge 2
+        {
+            pos   = {-0.879,0.1,-0.103},
+            size  = 250,
+            state = false
+        },
+        --forge 3
+        {
+            pos   = {-0.792,0.1,-0.103},
+            size  = 250,
+            state = false
+        },
+
+        --fire
+        {
+            pos   = {-0.801,0.1,0.004},
+            size  = 250,
+            state = false
+        },
+        --horn
+        {
+            pos   = {-0.801,0.1,0.104},
+            size  = 250,
+            state = false
+        },
+        --crystal
+        {
+            pos   = {-0.801,0.1,0.2035},
+            size  = 250,
+            state = false
+        },
+        --coral
+        {
+            pos   = {-0.801,0.1,0.303},
+            size  = 250,
+            state = false
+        },
+        --thunder
+        {
+            pos   = {-0.801,0.1,0.4025},
+            size  = 250,
+            state = false
+        },
+        --metal
+        {
+            pos   = {-0.801,0.1,0.502},
+            size  = 250,
+            state = false
+        },
+        --feather
+        {
+            pos   = {-0.801,0.1,0.6015},
+            size  = 250,
+            state = false
+        },
+        --venom
+        {
+            pos   = {-0.801,0.1,0.701},
+            size  = 250,
+            state = false
+        },
+        --ice
+        {
+            pos   = {-0.801,0.1,0.800},
+            size  = 250,
+            state = false
+        },
+
+        --Vyraxen trophy
+        {
+            pos   = {-0.332,0.1,-0.417},
+            size  = 350,
+            state = false
+        },
+        --Kharja trophy
+        {
+            pos   = {0.064,0.1,-0.417},
+            size  = 350,
+            state = false
+        },
+        --Toramat trophy
+        {
+            pos   = {-0.332,0.1,-0.297},
+            size  = 350,
+            state = false
+        },
+        --Dygorax trophy
+        {
+            pos   = {0.064,0.1,-0.297},
+            size  = 350,
+            state = false
+        },
+        --Korowon trophy
+        {
+            pos   = {-0.332,0.1,-0.176},
+            size  = 350,
+            state = false
+        },
+        --Orouxen trophy
+        {
+            pos   = {0.064,0.1,-0.176},
+            size  = 350,
+            state = false
+        },
+        --Felaxir trophy
+        {
+            pos   = {-0.332,0.1,-0.056},
+            size  = 350,
+            state = false
+        },
+        --Morkraas trophy
+        {
+            pos   = {0.064,0.1,-0.056},
+            size  = 350,
+            state = false
+        },
+        --Ozew trophy
+        {
+            pos   = {-0.332,0.1,0.065},
+            size  = 350,
+            state = false
+        },
+        --Jekoros trophy
+        {
+            pos   = {0.064,0.1,0.065},
+            size  = 350,
+            state = false
+        },
+        --Hurom trophy
+        {
+            pos   = {-0.332,0.1,0.185},
+            size  = 350,
+            state = false
+        },
+        --Tarragua trophy
+        {
+            pos   = {0.064,0.1,0.185},
+            size  = 350,
+            state = false
+        },
+        --Hydar trophy
+        {
+            pos   = {-0.332,0.1,0.307},
+            size  = 350,
+            state = false
+        },
+        --Reikal trophy
+        {
+            pos   = {0.064,0.1,0.307},
+            size  = 350,
+            state = false
+        },
+        --Sirkaaj trophy
+        {
+            pos   = {-0.332,0.1,0.427},
+            size  = 350,
+            state = false
+        },
+        --Mamuraak trophy
+        {
+            pos   = {0.064,0.1,0.427},
+            size  = 350,
+            state = false
+        },
+        --Pazis trophy
+        {
+            pos   = {-0.332,0.1,0.549},
+            size  = 350,
+            state = false
+        },
+        --Nagarjas trophy
+        {
+            pos   = {0.064,0.1,0.549},
+            size  = 350,
+            state = false
+        },
+        --Zekath trophy
+        {
+            pos   = {-0.332,0.1,0.669},
+            size  = 350,
+            state = false
+        },
+        --Zekalith trophy
+        {
+            pos   = {0.064,0.1,0.669},
+            size  = 350,
+            state = false
+        },
+        --Taraska trophy
+        {
+            pos   = {-0.332,0.1,0.790},
+            size  = 350,
+            state = false
+        },
+        --Xitheros trophy
+        {
+            pos   = {0.064,0.1,0.790},
+            size  = 350,
+            state = false
+        },
+
+        --Quest 1
+        {
+            pos   = {0.314,0.1,-0.4225},
+            size  = 200,
+            state = false,
+			card = 1,
+        },
+        --Quest 2
+        {
+            pos   = {0.393,0.1,-0.4225},
+            size  = 200,
+            state = false, card = 2
+        },
+        --Quest 3
+        {
+            pos   = {0.472,0.1,-0.4225},
+            size  = 200,
+            state = false, card = 3
+        },
+        --Quest 4
+        {
+            pos   = {0.551,0.1,-0.4225},
+            size  = 200,
+            state = false, card = 4
+        },
+        --Quest 5
+        {
+            pos   = {0.629,0.1,-0.4225},
+            size  = 200,
+            state = false, card = 5
+        },
+        --Quest 6
+        {
+            pos   = {0.708,0.1,-0.4225},
+            size  = 200,
+            state = false, card = 6
+        },
+        --Quest 7
+        {
+            pos   = {0.786,0.1,-0.4225},
+            size  = 200,
+            state = false, card = 7
+        },
+        --Quest 8
+        {
+            pos   = {0.865,0.1,-0.4225},
+            size  = 200,
+            state = false,
+			card = 8
+        },
+        --Quest 9
+        {
+            pos   = {0.944,0.1,-0.4225},
+            size  = 200,
+            state = false,
+			card = 9
+        },
+        --Quest 10
+        {
+            pos   = {1.022,0.1,-0.4225},
+            size  = 200,
+            state = false,
+			card = 10
+        },
+
+        --Quest 11
+        {
+            pos   = {0.315,0.1,-0.319},
+            size  = 200,
+            state = false,
+			card = 11
+        },
+        --Quest 12
+        {
+            pos   = {0.394,0.1,-0.319},
+            size  = 200,
+            state = false,
+			card = 12
+        },
+        --Quest 13
+        {
+            pos   = {0.473,0.1,-0.319},
+            size  = 200,
+            state = false,
+			card = 13
+        },
+        --Quest 14
+        {
+            pos   = {0.552,0.1,-0.319},
+            size  = 200,
+            state = false,
+			card = 14
+			
+        },
+        --Quest 15
+        {
+            pos   = {0.630,0.1,-0.319},
+            size  = 200,
+            state = false,
+			card = 15
+        },
+        --Quest 16
+        {
+            pos   = {0.709,0.1,-0.319},
+            size  = 200,
+            state = false,
+			card = 16
+        },
+        --Quest 17
+        {
+            pos   = {0.787,0.1,-0.319},
+            size  = 200,
+            state = false,
+			card = 17
+        },
+        --Quest 18
+        {
+            pos   = {0.866,0.1,-0.319},
+            size  = 200,
+            state = false,
+			card = 18
+        },
+        --Quest 19
+        {
+            pos   = {0.945,0.1,-0.319},
+            size  = 200,
+            state = false,
+			card = 19
+        },
+        --Quest 20
+        {
+            pos   = {1.022,0.1,-0.319},
+            size  = 200,
+            state = false,
+			card = 20
+        },
+
+        --Quest 21
+        {
+            pos   = {0.315,0.1,-0.218},
+            size  = 200,
+            state = false,
+			card = 21
+        },
+        --Quest 22
+        {
+            pos   = {0.394,0.1,-0.218},
+            size  = 200,
+            state = false,
+			card = 22
+        },
+        --Quest 23
+        {
+            pos   = {0.473,0.1,-0.218},
+            size  = 200,
+            state = false,
+			card = 23
+        },
+        --Quest 24
+        {
+            pos   = {0.552,0.1,-0.218},
+            size  = 200,
+            state = false,
+			card = 24
+        },
+        --Quest 25
+        {
+            pos   = {0.630,0.1,-0.218},
+            size  = 200,
+            state = false,
+			card = 25
+        },
+        --Quest 26
+        {
+            pos   = {0.709,0.1,-0.218},
+            size  = 200,
+            state = false,
+			card = 26
+        },
+        --Quest 27
+        {
+            pos   = {0.787,0.1,-0.218},
+            size  = 200,
+            state = false,
+			card = 27
+        },
+        --Quest 28
+        {
+            pos   = {0.866,0.1,-0.218},
+            size  = 200,
+            state = false,
+			card = 28
+        },
+        --Quest 29
+        {
+            pos   = {0.945,0.1,-0.218},
+            size  = 200,
+            state = false,
+			card = 29
+        },
+        --Quest 30
+        {
+            pos   = {1.022,0.1,-0.218},
+            size  = 200,
+            state = false,
+			card = 30
+        },
+
+        --Quest 31
+        {
+            pos   = {0.315,0.1,-0.118},
+            size  = 200,
+            state = false,
+			card = 31
+        },
+        --Quest 32
+        {
+            pos   = {0.394,0.1,-0.118},
+            size  = 200,
+            state = false,
+			card = 32
+        },
+        --Quest 33
+        {
+            pos   = {0.473,0.1,-0.118},
+            size  = 200,
+            state = false,
+			card = 33
+        },
+        --Quest 34
+        {
+            pos   = {0.552,0.1,-0.118},
+            size  = 200,
+            state = false,
+			card = 34
+        },
+        --Quest 35
+        {
+            pos   = {0.630,0.1,-0.118},
+            size  = 200,
+            state = false,
+			card = 35
+        },
+        --Quest 36
+        {
+            pos   = {0.709,0.1,-0.118},
+            size  = 200,
+            state = false,
+			card = 36
+        },
+        --Quest 37
+        {
+            pos   = {0.787,0.1,-0.118},
+            size  = 200,
+            state = false,
+			card = 37
+        },
+        --Quest 38
+        {
+            pos   = {0.866,0.1,-0.118},
+            size  = 200,
+            state = false,
+			card = 38
+        },
+        --Quest 39
+        {
+            pos   = {0.945,0.1,-0.118},
+            size  = 200,
+            state = false,
+			card = 39
+        },
+        --Quest 40
+        {
+            pos   = {1.022,0.1,-0.118},
+            size  = 200,
+            state = false,
+			card = 40
+        },
+
+        --Quest 41
+        {
+            pos   = {0.315,0.1,-0.017},
+            size  = 200,
+            state = false,
+			card = 41
+        },
+        --Quest 42
+        {
+            pos   = {0.394,0.1,-0.017},
+            size  = 200,
+            state =  false,
+			card = 42
+        },
+        --Quest 43
+        {
+            pos   = {0.473,0.1,-0.017},
+            size  = 200,
+            state = false,
+			card = 43
+        },
+        --Quest 44
+        {
+            pos   = {0.552,0.1,-0.017},
+            size  = 200,
+            state = false,
+			card = 44
+        },
+        --Quest 45
+        {
+            pos   = {0.630,0.1,-0.017},
+            size  = 200,
+            state = false,
+			card = 45
+        },
+        --Quest 46
+        {
+            pos   = {0.709,0.1,-0.017},
+            size  = 200,
+            state = false,
+			card = 46
+        },
+        --Quest 47
+        {
+            pos   = {0.787,0.1,-0.017},
+            size  = 200,
+            state = false,
+			card = 47
+        },
+        --Quest 48
+        {
+            pos   = {0.866,0.1,-0.017},
+            size  = 200,
+            state = false,
+			card = 48
+        },
+        --Quest 49
+        {
+            pos   = {0.945,0.1,-0.017},
+            size  = 200,
+            state = false,
+			card = 49
+        },
+
+        --Defeat 1
+        {
+            pos   = {0.363,0.1,0.782},
+            size  = 350,
+            state = false
+        },
+        --Defeat 2
+        {
+            pos   = {0.501,0.1,0.782},
+            size  = 350,
+            state = false
+        },
+        --Defeat 3
+        {
+            pos   = {0.641,0.1,0.782},
+            size  = 350,
+            state = false
+        },
+
+        --End of checkboxes
+    },
+    --Add counters that have a + and - button
+    counter = {
+        --[[
+        pos    = the position (pasted from the helper tool)
+        size   = height/width/font_size for counter
+        value  = default starting value for counter
+        hideBG = if background of counter is hidden (true=hidden, false=not)
+        ]]
+
+        --Valor counter
+        {
+            pos    = {0.973,0.1,0.714},
+            size   = 300,
+            value  = 0,
+            hideBG = true
+        },
+
+        --Total defeats counter
+        {
+            pos    = {0.973,0.1,0.784},
+            size   = 300,
+            value  = 0,
+            hideBG = true
+        },
+        --End of counters
+    },
+    --Add editable text boxes
+    textbox = {
+        --[[
+        pos       = the position (pasted from the helper tool)
+        rows      = how many lines of text you want for this box
+        width     = how wide the text box is
+        font_size = size of text. This and "rows" effect overall height
+        label     = what is shown when there is no text. "" = nothing
+        value     = text entered into box. "" = nothing
+        alignment = Number to indicate how you want text aligned
+                    (1=Automatic, 2=Left, 3=Center, 4=Right, 5=Justified)
+        ]]
+        
+        
+        --Achievements
+        {
+            pos       = {0.642,0.1,0.366},
+            rows      = 6,
+            width     = 3710,
+            font_size = 300,
+            label     = " ",
+            value     = "",
+            alignment = 4
+        },
+        --End of textboxes
+    }
+}
+
+function getLevel()
+	return currentLevel
+end 
+
+--Save function
+function updateSave()
+    saved_data = JSON.encode({refdata = ref_buttonData, currentLevel = currentLevel})
+    if disableSave==true then saved_data="" end
+    self.script_state = saved_data
+end
+
+--Startup procedure
+function onload(saved_data)
+    if disableSave==true then saved_data="" end
+    if saved_data ~= "" then
+        local loaded_data = JSON.decode(saved_data)
+		currentLevel = loaded_data.currentLevel
+        ref_buttonData = loaded_data.refdata
+    else
+		currentLevel = 0
+        ref_buttonData = defaultButtonData
+    end
+
+    spawnedButtonCount = 0
+    createCheckbox()
+    createCounter()
+    createTextbox()
+end
+
+
+
+--Checks or unchecks the given box
+function click_checkbox(tableIndex, buttonIndex)
+    if ref_buttonData.checkbox[tableIndex].state == true then
+        ref_buttonData.checkbox[tableIndex].state = false
+        self.editButton({index=buttonIndex, label=""})
+    else
+        ref_buttonData.checkbox[tableIndex].state = true
+        self.editButton({index=buttonIndex, label=string.char(10008)})
+    end
+    updateSave()
+end
+
+--Applies value to given counter display
+function click_counter(tableIndex, buttonIndex, amount)
+    ref_buttonData.counter[tableIndex].value = ref_buttonData.counter[tableIndex].value + amount
+    self.editButton({index=buttonIndex, label=ref_buttonData.counter[tableIndex].value})
+    updateSave()
+end
+
+--Updates saved value for given text box
+function click_textbox(i, value, selected)
+    if selected == false then
+        ref_buttonData.textbox[i].value = value
+        updateSave()
+    end
+end
+
+--Dud function for if you have a background on a counter
+function click_none() end
+
+--function to handle quest spawning (eventually forge spawning too) 
+function click_func(cardname, tableIndex)
+	if ref_buttonData.checkbox[tableIndex].state then 
+		local bag = getObjectFromGUID(BookStandGUID)
+
+		bag.call("setQuest", cardname)
+	end
+end
+
+function setLevel(lvl, tableIndex)
+	if ref_buttonData.checkbox[tableIndex].state then 
+		currentLevel = lvl
+	else 
+		currentLevel = (lvl - 1)
+	end
+end 
+
+--Makes checkboxes
+function createCheckbox()
+    for i, data in ipairs(ref_buttonData.checkbox) do
+        --Sets up reference function
+        local buttonNumber = spawnedButtonCount
+        local funcName = "checkbox"..i
+		if data.card then 
+			func = function() click_checkbox(i, buttonNumber) click_func(data.card,i) end
+		elseif data.campaignLevel then 
+			func = function() click_checkbox(i, buttonNumber) setLevel(data.campaignLevel,i) end
+		else
+			func = function() click_checkbox(i, buttonNumber) end
+		end
+        self.setVar(funcName, func)
+        --Sets up label
+        local label = ""
+        if data.state==true then label=string.char(10008) end
+        --Creates button and counts it
+        self.createButton({
+            label=label, click_function=funcName, function_owner=self,
+            position=data.pos, height=data.size, width=data.size,
+            font_size=data.size, scale=buttonScale,
+            color=buttonColor, font_color=buttonFontColor
+        })
+        spawnedButtonCount = spawnedButtonCount + 1
+    end
+end
+
+--Makes counters
+function createCounter()
+    for i, data in ipairs(ref_buttonData.counter) do
+        --Sets up display
+        local displayNumber = spawnedButtonCount
+        --Sets up label
+        local label = data.value
+        --Sets height/width for display
+        local size = data.size
+        if data.hideBG == true then size = 0 end
+        --Creates button and counts it
+        self.createButton({
+            label=label, click_function="click_none", function_owner=self,
+            position=data.pos, height=size, width=size,
+            font_size=data.size, scale=buttonScale,
+            color=buttonColor, font_color=buttonFontColor
+        })
+        spawnedButtonCount = spawnedButtonCount + 1
+
+        --Sets up add 1
+        local funcName = "counterAdd"..i
+        local func = function() click_counter(i, displayNumber, 1) end
+        self.setVar(funcName, func)
+        --Sets up label
+        local label = "+"
+        --Sets up position
+        local offsetDistance = (data.size/2 + data.size/4) * (buttonScale[1] * 0.002)
+        local pos = {data.pos[1] + offsetDistance, data.pos[2], data.pos[3]}
+        --Sets up size
+        local size = data.size / 2
+        --Creates button and counts it
+        self.createButton({
+            label=label, click_function=funcName, function_owner=self,
+            position=pos, height=size, width=size,
+            font_size=size, scale=buttonScale,
+            color=buttonColor, font_color=buttonFontColor
+        })
+        spawnedButtonCount = spawnedButtonCount + 1
+
+        --Sets up subtract 1
+        local funcName = "counterSub"..i
+        local func = function() click_counter(i, displayNumber, -1) end
+        self.setVar(funcName, func)
+        --Sets up label
+        local label = "-"
+        --Set up position
+        local pos = {data.pos[1] - offsetDistance, data.pos[2], data.pos[3]}
+        --Creates button and counts it
+        self.createButton({
+            label=label, click_function=funcName, function_owner=self,
+            position=pos, height=size, width=size,
+            font_size=size, scale=buttonScale,
+            color=buttonColor, font_color=buttonFontColor
+        })
+        spawnedButtonCount = spawnedButtonCount + 1
+    end
+end
+
+function createTextbox()
+    for i, data in ipairs(ref_buttonData.textbox) do
+        --Sets up reference function
+        local funcName = "textbox"..i
+        local func = function(_,_,val,sel) click_textbox(i,val,sel) end
+        self.setVar(funcName, func)
+
+        self.createInput({
+            input_function = funcName,
+            function_owner = self,
+            label          = data.label,
+            alignment      = data.alignment,
+            position       = data.pos,
+            scale          = buttonScale,
+            width          = data.width,
+            height         = (data.font_size*data.rows)+24,
+            font_size      = data.font_size,
+            color          = buttonColor,
+            font_color     = buttonFontColor,
+            value          = data.value,
+        })
+    end
+end
